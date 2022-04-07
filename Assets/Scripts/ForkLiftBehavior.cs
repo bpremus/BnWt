@@ -27,7 +27,17 @@ public class ForkLiftBehavior : MonoBehaviour
     {
         if (_pickup != null && DOTween.IsTweening(_pickup.transform)) { canControl = false; } else { canControl = true; }
 
-        Vector3 direction = new Vector3(Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
+        Vector3 direction = Vector3.zero; // new Vector3(Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
+        
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            direction.x = 1;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            direction.x = -1;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            direction.z = 1;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            direction.z = -1;
+
 
         if (canControl)
         {
@@ -84,6 +94,8 @@ public class ForkLiftBehavior : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!_grabBox) return;
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(_grabBox.bounds.center, _grabBox.bounds.size);
 

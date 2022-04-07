@@ -35,17 +35,17 @@ public class Trolly : MonoBehaviour
     public void move_mehanics()
     {
         _timer += Time.deltaTime;
-        if (_timer > move_timer)
-        {
-             if (_timer > move_timer + stop_timer)
-             {
-                 _timer = 0;
-             }
-         }
-         else
-         {
-           distance += move_speed * Time.deltaTime;
-         }
+       // if (_timer > move_timer)
+       // {
+       //      if (_timer > move_timer + stop_timer)
+       //      {
+       //          _timer = 0;
+       //      }
+       //  }
+       //  else
+       //  {
+       distance += move_speed * Time.deltaTime;
+       //  }
     }
 
     public void OnDestinationReach()

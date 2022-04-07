@@ -817,6 +817,7 @@ MonoBehaviour:
   - {fileID: 1434247257}
   - {fileID: 1025700188}
   - {fileID: 322986020}
+  power: 0
 --- !u!4 &436027336
 Transform:
   m_ObjectHideFlags: 0
@@ -2693,6 +2694,7 @@ MonoBehaviour:
   - {fileID: 1850046358}
   - {fileID: 288898840}
   - {fileID: 1329348156}
+  power: 0
 --- !u!4 &1396727300
 Transform:
   m_ObjectHideFlags: 0
@@ -3028,6 +3030,8 @@ GameObject:
   - component: {fileID: 1522879275}
   - component: {fileID: 1522879274}
   - component: {fileID: 1522879277}
+  - component: {fileID: 1522879278}
+  - component: {fileID: 1522879279}
   m_Layer: 0
   m_Name: fork_lift
   m_TagString: Untagged
@@ -3108,11 +3112,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 1522879273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 759f4419732f07740b7bb8c8c86a2aca, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a69b8ca2ef7584418925f513930e7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move_speed: 5
-  turn_speed: 2
+  _speed: 5
+  _grabBox: {fileID: 0}
+  _lift: {fileID: 0}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _liftMin: -2.5
+  _liftMax: 2.5
+--- !u!54 &1522879278
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522879273}
+  serializedVersion: 2
+  m_Mass: 500
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!143 &1522879279
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522879273}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 2}
 --- !u!1 &1577638672
 GameObject:
   m_ObjectHideFlags: 0
@@ -4191,6 +4235,7 @@ MonoBehaviour:
   - {fileID: 1183717322}
   - {fileID: 1195647949}
   - {fileID: 1607046960}
+  power: 0
 --- !u!4 &2126897209
 Transform:
   m_ObjectHideFlags: 0

@@ -7,7 +7,10 @@ public class ConveyerBeltPath : MonoBehaviour
 {
     [SerializeField]
     private List<BeltNode> _nodes = new List<BeltNode>();
-    
+
+
+    public float power = 0;
+
     // should be added in order 
     public void BuildPath()
     {
