@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BeltNode : MonoBehaviour
+{
+    [SerializeField]
+    private float _radius = 3f;
+
+    [SerializeField]
+    private BeltNode _nextNode;
+
+    private float _distance = 0;
+
+    public void AddNode(BeltNode node)
+    {
+        _nextNode = node;
+        _distance = Vector3.Distance(transform.position, node.transform.position);
+    }
+
+    public float GetDistance()
+    {
+        return _distance;
+    }
+
+    public Vector3 GetNodeAtDistance(float distance)
+    {
+        Vector3 pt = transform.position;
+        Vector3 dir = (transform.position - _nextNode.transform.position).normalized;
+        return pt + dir * distance;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_nextNode)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, _nextNode.transform.position);
+        }
+        else 
+        {
+            // Last node in line
+            Gizmos.color = Color.red;
+        }
+        Gizmos.DrawSphere(transform.position, _radius);
+    }
+}
