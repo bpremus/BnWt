@@ -2,33 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class ForkLiftBehavior : MonoBehaviour
 {
-    [SerializeField] float _speed = 20f;
-
-    private CharacterController _control;
+    [SerializeField] private float move_speed = 10f, 
+                                   rotation_speed = 10f, 
+                                   center_of_mass_offset = 0.2f;
     [SerializeField] private Collider _grabBox;
     [SerializeField] private Transform _lift;
     [SerializeField] private LayerMask _layerMask;
+
+    public TMP_Text pointText; //This is only temporary 
+    private int score;
+
+    protected Rigidbody rb;
 
     private bool canControl = true;
     private bool isGrabbing = false;
     private PickupBehaviour _pickup;
 
-    [SerializeField] private float _liftMin = -2.5f, _liftMax = 2.5f;
+    [SerializeField] private float _liftMin, _liftMax;
 
     private void Awake()
     {
-        _control = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = transform.right * center_of_mass_offset;
     }
 
     void FixedUpdate()
     {
-        if (_pickup != null && DOTween.IsTweening(_pickup.transform)) { canControl = false; } else { canControl = true; }
+        if (canControl)
+        {
+            Move();
+            if (Input.GetKeyDown(KeyCode.Space)) { ChangeLiftState(); }
+        }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (!isGrabbing) { _lift.transform.DOLocalMoveZ(_liftMax, 0.5f); GrabStatus(true); }
+            else { _lift.transform.DOLocalMoveZ(_liftMin, 0.5f); GrabStatus(false); }
+        }
+    }
+
+    void Move()
+    {
         Vector3 direction = Vector3.zero; // new Vector3(Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
-        
+
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             direction.x = 1;
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -38,32 +58,27 @@ public class ForkLiftBehavior : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             direction.z = -1;
 
+        // apply force (force is rotated as object is rotated) 
+        // we need to fix this in blender first or swap the forces here 
+        rb.AddForce(transform.right * direction.x * move_speed * Time.fixedDeltaTime, ForceMode.Impulse);
 
-        if (canControl)
-        {
-            if (direction.magnitude >= 0.1f)
-            {
-                _control.Move(direction * _speed * Time.deltaTime);
-            }
+        // move speed
+        float localForwardVelocity = Vector3.Dot(rb.velocity, transform.right);
+        //Debug.Log(localForwardVelocity);
 
-            if (Input.GetKeyDown(KeyCode.Space)) { ChangeLiftState(); }
-
-            
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (!isGrabbing) { _lift.transform.DOLocalMoveZ(_liftMax, 0.5f); isGrabbing = true; }
-            else { _lift.transform.DOLocalMoveZ(_liftMin, 0.5f); isGrabbing = false; }
-        }
+        if (localForwardVelocity != 0)
+        { rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse); }
     }
 
-    void ChangeLiftState()
+    public void ChangeLiftState()
     {
-        if (isGrabbing && _pickup != null) 
+        if (isGrabbing && _pickup) 
         {
             Debug.Log("Dropping...");
-            _lift.transform.DOLocalMoveZ(_liftMin, 1.5f);
-            _pickup.transform.parent = null;
+            _lift.transform.DOLocalMoveZ(_liftMin, 0.5f);
+
+            // These two lines might be irrelevant now?
+            _pickup.transform.parent = null; 
             _pickup = null;
         }
         else 
@@ -75,15 +90,13 @@ public class ForkLiftBehavior : MonoBehaviour
                 Debug.Log("Hit : " + hitCol.name + i);
                 if (hitCol.transform.TryGetComponent(out _pickup))
                 {
-                    if (_pickup.gameObject != null)
+                    if (_pickup.gameObject)
                     {
-                        Debug.Log("Lifting...");
-                        _pickup.transform.DOJump(_grabBox.transform.position, _pickup.jumpPower, 1, 1.5f).SetEase(Ease.InBounce);
-                        _pickup.transform.DORotate(new Vector3(0f, 180 * 2f, 0f), 1.5f, RotateMode.FastBeyond360);
-                        _lift.transform.DOLocalMoveZ(_liftMax, 1.5f);
+                        canControl = false;
+                        StartCoroutine(AnimatePickUp(_pickup));
 
                         _pickup.transform.parent = this.transform;
-                        isGrabbing = true;
+                        GrabStatus(true);
                         return;
                     }
                 }
@@ -91,6 +104,32 @@ public class ForkLiftBehavior : MonoBehaviour
             }
         }
     }
+
+    public void GrabStatus(bool status)
+    {
+        isGrabbing = status;
+    }
+
+    private IEnumerator AnimatePickUp(PickupBehaviour _p)
+    {
+        Debug.Log("Lifting...");
+        GrabStatus(true);
+        Sequence liftSequence = DOTween.Sequence();
+        liftSequence.OnComplete(() => { canControl = true; });
+        yield return liftSequence.
+            Append(_pickup.transform.DOJump(new Vector3(_grabBox.transform.position.x, _liftMax, _grabBox.transform.position.z), _p.jumpPower, 1, 1f).SetEase(Ease.InBounce)).
+            Append(_pickup.transform.DORotate(new Vector3(0f, 180 * 2f, 0f), 0.2f, RotateMode.FastBeyond360)).
+            Insert(0f, _lift.transform.DOLocalMoveZ(_liftMax, 1.5f)).WaitForCompletion();
+    }
+
+    #region UI Feedback
+    public void IncrementScore(int points)
+    {
+        score += points;
+        pointText.text = "POINTS: " + score;
+    }
+
+    #endregion
 
     private void OnDrawGizmos()
     {

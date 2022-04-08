@@ -11,6 +11,14 @@ public class Trolly : MonoBehaviour
     public float move_speed = 2f;
     public float move_timer = 2f;
     public float stop_timer = 3f;
+
+    // added collider
+    protected Collider col;
+    private void Awake()
+    {
+        col = GetComponent<BoxCollider>();
+    }
+
     public void SetPath(ConveyerBeltPath path)
     {
         _mainPath = path;
