@@ -88,6 +88,8 @@ public class ForkLiftController : Interactable
                         // pickup crate 
                         SetChild(sc);
                         _timer = 0;
+
+                        OnPickupCrate();
                         return;
                     }
                 }
@@ -104,6 +106,8 @@ public class ForkLiftController : Interactable
                             SetChild(sc);
                             _timer = 0;
                             // notify troll that we picked it up
+                            // to do
+                            OnPickupCrate();
                             return;
                         }
                     }
@@ -117,6 +121,8 @@ public class ForkLiftController : Interactable
                         tc.SetChild(child_object);
                         child_object = null;
                         _timer = 0;
+                        
+                        OnDropCrate();
                         return;
                     }
                 }
@@ -128,8 +134,9 @@ public class ForkLiftController : Interactable
                 DetachChild();
                 child_object = null;
                 _timer = 0;
+                OnDropCrate();
+                return;
             }
-
         }
     } 
 
@@ -255,4 +262,12 @@ public class ForkLiftController : Interactable
         Debug.Log("Cssssm");
     }
 
+    public void OnPickupCrate()
+    {
+
+    }
+    public void OnDropCrate()
+    {
+
+    }
 }
