@@ -200,17 +200,59 @@ public class ForkLiftController : Interactable
 
         if (localForwardVelocity != 0)
         {
-            if (direction.x < 0) direction = -direction;
+            ForkliftState _state = ForkliftState.fwd;
+            if (direction.x < 0)
+            {
+                direction = -direction;
+                _state = ForkliftState.back;
+            }
             rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+            if (forklift_state == ForkliftState.idle)
+            {
+                forklift_state = _state;
+                OnStartMoving();
+
+            }
+        }
+        else
+        {
+            if (forklift_state != ForkliftState.idle)
+            {
+                forklift_state = ForkliftState.idle;
+                OnStopMoving();
+            }
         }
 
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         var rot = Quaternion.FromToRotation(transform.forward, Vector3.up);
         rb.AddTorque(new Vector3(rot.x, rot.y, rot.z) * 10f, ForceMode.Impulse);
-
-
     }
 
+    public enum ForkliftState { idle, fwd, back };
+    ForkliftState forklift_state = ForkliftState.idle;
 
+
+
+    // test callbacks 
+    // -----------------------------
+
+    public void OnStartMoving()
+    {
+        // forward
+        if (forklift_state == ForkliftState.fwd)
+        {
+            Debug.Log("wrooom");
+        }
+        // back
+        if (forklift_state == ForkliftState.back)
+        {
+            Debug.Log("beep beep beep!");
+        }
+    }
+
+    public void OnStopMoving()
+    {
+        Debug.Log("Cssssm");
+    }
 
 }
