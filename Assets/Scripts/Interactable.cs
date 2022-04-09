@@ -19,24 +19,6 @@ public class Interactable : MonoBehaviour
     
     }
 
-    protected void OnTriggerEnter(Collider other)
-    {
-        Interactable i = other.GetComponent<Interactable>();
-        if (i)
-        {
-            Interact(i);
-        }
-    }
-
-    protected void OnTriggerStay(Collider other)
-    {
-
-        Interactable i = other.GetComponent<Interactable>();
-        if (i)
-        {
-            Interacting(i);
-        }
-    }
 
     public Interactable HasChild()
     {
@@ -60,6 +42,7 @@ public class Interactable : MonoBehaviour
         child_object.transform.SetParent(this.transform);
         child_object.transform.localPosition = Vector3.zero;
     }
+
     virtual protected void DetachChild()
     {
         child_object.transform.SetParent(null);

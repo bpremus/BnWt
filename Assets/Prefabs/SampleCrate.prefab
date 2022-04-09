@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2620637972969979250}
   - component: {fileID: 8883448934164527034}
   - component: {fileID: 153531854543191148}
+  - component: {fileID: 1147670022727605002}
   m_Layer: 6
   m_Name: SampleCrate
   m_TagString: Untagged
@@ -108,3 +109,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e853e54e5e0f9804a8c1a497abe8a9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  child_object: {fileID: 0}
+--- !u!54 &1147670022727605002
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059085733867763595}
+  serializedVersion: 2
+  m_Mass: 0.5
+  m_Drag: 0.5
+  m_AngularDrag: 0.5
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

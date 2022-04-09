@@ -13,6 +13,13 @@ public class UILayer : MonoBehaviour
         get { return _instance; }
     }
 
+    float start_time = 1;
+    public void Update()
+    {
+        start_time += Time.deltaTime;
+        SetBottomText(Mathf.Floor(start_time) + " sec");
+    }
+
     public void SetBottomText(string str)
     {
         _bottom_text.text = str;

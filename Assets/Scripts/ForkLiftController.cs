@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ForkLiftController : Interactable
@@ -16,76 +17,131 @@ public class ForkLiftController : Interactable
     }
 
 
-    override public void Interact(Interactable other)
+    public List<Interactable> GetObjectsInRange(float radius = 10f)
     {
-        SimpleCrate sc = other.GetComponent<SimpleCrate>();
-        if (sc)
-        {
+        Debug.DrawRay(transform.position, transform.right * radius, Color.green);
+        float pickup_angle = 35f;
 
+        List<Interactable> objects_in_range = new List<Interactable>();
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject == this) continue;
+            SimpleCrate crate = hitCollider.GetComponent<SimpleCrate>();
+            if (crate)
+            {
+                // if crate is in front 
+                Vector3 directionToTarget = crate.transform.position - transform.position;
+                float ang = Vector3.Angle(transform.right, directionToTarget);
+                if (ang < pickup_angle)
+                {
+                    objects_in_range.Add(crate);
+                }
+            }
+            Trolly trolly = hitCollider.GetComponent<Trolly>();
+            if (trolly)
+            {
+                // if crate is in front 
+                Vector3 directionToTarget = trolly.transform.position - transform.position;
+                float ang = Vector3.Angle(transform.right, directionToTarget);
+                if (ang < pickup_angle)
+                {
+                    objects_in_range.Add(trolly);
+                }
+            }
         }
 
-        Trolly tc = other.GetComponent<Trolly>();
-        if (tc)
+        // sort by distance
+        objects_in_range.OrderBy((d) =>
+        (d.transform.position - transform.position).sqrMagnitude).ToArray();
+
+        return objects_in_range;
+    }
+
+    [SerializeField]
+    float pickup_distance = 5f;
+    float _timer = 0;
+    public void InteractControl()
+    {
+        //debug
+      //  _interactables = GetObjectsInRange(pickup_distance);
+
+        _timer += Time.deltaTime;
+        if (_timer < 0.5)
         {
-            // we have a child 
-            if (child_object)
+            return;
+        }
+
+        // we only check if player hit the button
+        if (Input.GetKey(KeyCode.Space))
+        {
+            List<Interactable> interactables = GetObjectsInRange(pickup_distance);
+            if (interactables.Count > 0)
             {
-                if (tc.HasChild())
+                //box on ground
+                SimpleCrate sc = interactables[0].GetComponent<SimpleCrate>();
+                if (sc)
                 {
-                    // nothing to do 
-                    return;
+                    // pick it up if we dont have one
+                    if (child_object == null)
+                    {
+                        // pickup crate 
+                        SetChild(sc);
+                        _timer = 0;
+                        return;
+                    }
                 }
-                else
+                // box on trolly
+                if (interactables.Count > 1)
+                { 
+                    sc = interactables[1].GetComponent<SimpleCrate>();
+                    if (sc)
+                    {
+                        // pick it up if we dont have one
+                        if (child_object == null)
+                        {
+                            // pickup crate 
+                            SetChild(sc);
+                            _timer = 0;
+                            // notify troll that we picked it up
+                            return;
+                        }
+                    }
+                }
+                Trolly tc = interactables[0].GetComponent<Trolly>();
+                if (tc)
                 {
-                  // place it on trolly
-                  //  if (Input.GetKey(KeyCode.Space) == false)
-                  //  {
+                    // if we have one place it on trolly
+                    if (child_object)
+                    {
                         tc.SetChild(child_object);
                         child_object = null;
-                  //  }
-
+                        _timer = 0;
+                        return;
+                    }
                 }
-                return;
             }
-           // else
-           // {
-           //     // pick child
-           //     if (tc.HasChild())
-           //     {
-           //         if (child_object == null)
-           //         {
-           //             // pick it up from trolly
-           //             SetChild( tc.GetChild() );
-           //         }
-           //     }
-           // }         
+
+            // drop on ground 
+            if (child_object)
+            {
+                DetachChild();
+                child_object = null;
+                _timer = 0;
+            }
+
         }
+    } 
+
+
+    override public void Interact(Interactable other)
+    {
+       
     }
 
     override public void Interacting(Interactable other)
     {
-        if (child_object == null)
-        { 
-            Trolly tc = other.GetComponent<Trolly>();
-            if (tc)
-            {
-                if (tc.HasChild())
-                {
-                    if (Input.GetKey(KeyCode.Space))
-                    {
-                        SetChild(tc.GetChild());
-                    }
-                }
-            }
-        }
-        //  SimpleCrate sc = other.GetComponent<SimpleCrate>();
-        //  if (sc)
-        //  {
-        //      if (Input.GetKey(KeyCode.Space))
-        //      { 
-        //          SetChild(sc);
-        //      }
-        //  }
+       
     }
 
     public void HandleChild()
@@ -93,18 +149,11 @@ public class ForkLiftController : Interactable
     
     }
 
-
-    public void SetChild(Interactable child_object)
+    public void SetChild(SimpleCrate child_object)
     {
-        if (this.child_object == child_object)
-        {
-            // we already have it 
-        }
-        else if (this.child_object == null)
-        {
-            // good pick it up
-            this.child_object = child_object;
-        }
+        // good pick it up
+        this.child_object = child_object;
+        child_object.SetAsChild();
 
         OnChildSpawn();
     }
@@ -121,6 +170,7 @@ public class ForkLiftController : Interactable
     public void FixedUpdate()
     {
         Move();
+        InteractControl();
     }
     public void Move()
     {
@@ -145,10 +195,19 @@ public class ForkLiftController : Interactable
         localForwardVelocity = Mathf.Floor(rb.velocity.magnitude);
         //Debug.Log(localForwardVelocity);
 
-        UILayer.Instance.SetBottomText(localForwardVelocity + " Kph");
+        // this was for test
+        //UILayer.Instance.SetBottomText(localForwardVelocity + " Kph");
 
         if (localForwardVelocity != 0)
-        rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+        {
+            if (direction.x < 0) direction = -direction;
+            rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+        }
+
+        Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
+        var rot = Quaternion.FromToRotation(transform.forward, Vector3.up);
+        rb.AddTorque(new Vector3(rot.x, rot.y, rot.z) * 10f, ForceMode.Impulse);
+
 
     }
 
