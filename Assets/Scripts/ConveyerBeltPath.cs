@@ -8,8 +8,10 @@ public class ConveyerBeltPath : MonoBehaviour
     [SerializeField]
     private List<BeltNode> _nodes = new List<BeltNode>();
 
-
     public float power = 0;
+    public float move_speed = 2f;
+    public float slow_speed = 1f;
+    public float fast_speed = 3f;
 
     // should be added in order 
     public void BuildPath()
@@ -33,10 +35,11 @@ public class ConveyerBeltPath : MonoBehaviour
         BuildPath();
     }
 
-    public void GetNodeAtDistance(float distance, out Vector3 nodePt, out Vector3 direction)
+    public void GetNodeAtDistance(float distance, out Vector3 nodePt, out Vector3 direction, out BeltNode.NodeType type)
     {
         nodePt = Vector3.zero;
         direction = Vector3.forward;
+        type = BeltNode.NodeType.normal;
 
         float total_distance = 0;
         for (int i = 0; i < _nodes.Count; i++)
@@ -48,6 +51,7 @@ public class ConveyerBeltPath : MonoBehaviour
                 // we are on this node segment
                 float curret_dist = (total_distance - next_distance) - distance;
                 nodePt = _nodes[i].GetNodeAtDistance(curret_dist);
+                type = _nodes[i].node_type;
                 return;
             }
         }

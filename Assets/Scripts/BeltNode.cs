@@ -12,6 +12,10 @@ public class BeltNode : MonoBehaviour
 
     private float _distance = 0;
 
+    public enum NodeType { normal, slow, fast, wait};
+    [SerializeField]
+    public NodeType node_type;
+
     public void AddNode(BeltNode node)
     {
         _nextNode = node;
@@ -35,6 +39,14 @@ public class BeltNode : MonoBehaviour
         if (_nextNode)
         {
             Gizmos.color = Color.green;
+            if (node_type == NodeType.slow)
+            {
+                Gizmos.color = Color.yellow;
+            }
+            if (node_type == NodeType.fast)
+            {
+                Gizmos.color = Color.cyan;
+            }
             Gizmos.DrawLine(transform.position, _nextNode.transform.position);
         }
         else 
