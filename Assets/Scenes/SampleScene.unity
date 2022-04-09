@@ -3209,16 +3209,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 867094278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9468c5f457ace64f8d4df6d642b107f, type: 3}
+  m_Script: {fileID: 11500000, guid: fe30eaa2f49770a4ab11e57a42ee158b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadEvent: 1
-  UnloadEvent: 0
-  Banks:
-  - InGame
-  - InGame.strings
-  CollisionTag: 
-  PreloadSamples: 0
 --- !u!4 &867094280
 Transform:
   m_ObjectHideFlags: 0
