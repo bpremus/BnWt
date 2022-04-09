@@ -192,6 +192,7 @@ public class ForkLiftController : Interactable
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             direction.z = 1;
 
+  
         // apply force (force is rotated as object is rotated) 
         // we need to fix this in blender first or swap the forces here 
         Vector3 fwd = transform.right;
@@ -205,29 +206,34 @@ public class ForkLiftController : Interactable
         // this was for test
         //UILayer.Instance.SetBottomText(localForwardVelocity + " Kph");
 
-        if (localForwardVelocity != 0)
+        if (direction.x != 0 /*|| direction.z != 0 */)
         {
             ForkliftState _state = ForkliftState.fwd;
             if (direction.x < 0)
-            {
-                direction = -direction;
                 _state = ForkliftState.back;
-            }
-            rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+
             if (forklift_state == ForkliftState.idle)
             {
                 forklift_state = _state;
                 OnStartMoving();
-
             }
         }
         else
-        {
+        { 
             if (forklift_state != ForkliftState.idle)
             {
                 forklift_state = ForkliftState.idle;
                 OnStopMoving();
             }
+        }
+
+        if (localForwardVelocity != 0)
+        {     
+            if (direction.x < 0)
+            {
+                direction = -direction;
+            }
+            rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
         }
 
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
