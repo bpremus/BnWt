@@ -10,10 +10,22 @@ public class ForkLiftController : Interactable
     public float rotation_speed = 10f;
     public float center_of_mass_offset = 0.2f;
     public float localForwardVelocity = 0;
+    private FMOD.Studio.EventInstance ForkliftEngineFwd;
+    private FMOD.Studio.EventInstance ForkliftEngineBck;
+    private FMOD.Studio.EventInstance ForkliftBeep;
+
     public void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = transform.right * center_of_mass_offset;
+    }
+
+    private void Start()
+    {
+        ForkliftEngineFwd = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Forklift/Forklift_Engine_Fwd");
+        ForkliftEngineBck = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Forklift/Forklift_Engine_Bck");
+        ForkliftBeep = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Forklift/Forklift_Beep");
+
     }
 
 
@@ -178,6 +190,9 @@ public class ForkLiftController : Interactable
     {
         Move();
         InteractControl();
+        ForkliftEngineFwd.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
+        ForkliftBeep.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
+        ForkliftEngineBck.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
     }
     public void Move()
     {
@@ -255,17 +270,24 @@ public class ForkLiftController : Interactable
         if (forklift_state == ForkliftState.fwd)
         {
             Debug.Log("wrooom");
+            ForkliftEngineFwd.start();
         }
         // back
         if (forklift_state == ForkliftState.back)
         {
             Debug.Log("beep beep beep!");
+            ForkliftEngineBck.start();
+            ForkliftBeep.start();
+
         }
     }
 
     public void OnStopMoving()
     {
         Debug.Log("Cssssm");
+        ForkliftEngineFwd.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ForkliftEngineBck.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ForkliftBeep.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void OnPickupCrate()
