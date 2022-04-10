@@ -5,7 +5,7 @@ using UnityEngine;
 public class Trolly : Interactable
 {
     [SerializeField]
-    ConveyerBeltPath _mainPath;
+    protected ConveyerBeltPath _mainPath;
 
     public float distance = 0;
 
@@ -20,7 +20,7 @@ public class Trolly : Interactable
     [SerializeField]
     protected BilboardBubble bilboard;
 
-    private bool show_goods_bubble = false;
+    protected bool show_goods_bubble = false;
 
     [SerializeField]
     public int requered_family = 0;
@@ -34,7 +34,7 @@ public class Trolly : Interactable
     private FMOD.Studio.EventInstance TrolleyLoop;
 
 
-    public void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         ForkLiftController forkLift = collision.collider.GetComponent<ForkLiftController>();
         if (forkLift)
@@ -75,7 +75,7 @@ public class Trolly : Interactable
         _mainPath = path;
     }
 
-    public void SetOnPath()
+    public virtual void SetOnPath()
     {
         if (derailed)
         {
