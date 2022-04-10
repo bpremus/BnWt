@@ -18,6 +18,7 @@ public class ForkLiftBehavior : MonoBehaviour
 
     protected Rigidbody rb;
 
+    [SerializeField] private float _liftTime;
     private bool canControl = true;
     private bool isGrabbing = false;
     private PickupBehaviour _pickup;
@@ -117,9 +118,9 @@ public class ForkLiftBehavior : MonoBehaviour
         Sequence liftSequence = DOTween.Sequence();
         liftSequence.OnComplete(() => { canControl = true; });
         yield return liftSequence.
-            Append(_pickup.transform.DOJump(new Vector3(_grabBox.transform.position.x, _liftMax, _grabBox.transform.position.z), _p.jumpPower, 1, 1f).SetEase(Ease.InBounce)).
-            Append(_pickup.transform.DORotate(new Vector3(0f, 180 * 2f, 0f), 0.2f, RotateMode.FastBeyond360)).
-            Insert(0f, _lift.transform.DOLocalMoveZ(_liftMax, 1.5f)).WaitForCompletion();
+            Append(_pickup.transform.DOJump(new Vector3(_grabBox.transform.position.x, _liftMax, _grabBox.transform.position.z), _p.jumpPower, 1, _liftTime / 2).SetEase(Ease.InBounce)).
+            Append(_pickup.transform.DORotate(new Vector3(0f, 180 * 2f, 0f), _liftTime / 3, RotateMode.FastBeyond360)).
+            Insert(0f, _lift.transform.DOLocalMoveZ(_liftMax, _liftTime)).WaitForCompletion();
     }
 
     #region UI Feedback
