@@ -31,6 +31,8 @@ public class Trolly : Interactable
         Debug.Log("interact with " + other.name);
     }
 
+    private FMOD.Studio.EventInstance TrolleyLoop;
+
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -62,6 +64,10 @@ public class Trolly : Interactable
     {
         col = GetComponent<BoxCollider>();
         _currentNodeType = BeltNode.NodeType.wait;
+
+        TrolleyLoop = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Ambient & Objects/Trolley_Movement");
+        TrolleyLoop.start();
+
     }
 
     public void SetPath(ConveyerBeltPath path)
@@ -94,6 +100,9 @@ public class Trolly : Interactable
         SetOnPath();
         move_mehanics();
         ShowGoods();
+
+        TrolleyLoop.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
+
     }
 
     public void ShowGoods()
@@ -136,6 +145,8 @@ public class Trolly : Interactable
         // notify score script 
 
         // destroy cart 
+        TrolleyLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        TrolleyLoop.release();
         Destroy(this.gameObject);
     }
 
@@ -143,6 +154,9 @@ public class Trolly : Interactable
     {
 
         // notify score script 
+
+        TrolleyLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        TrolleyLoop.release();
 
         Debug.Log("cart derailed");
     }
