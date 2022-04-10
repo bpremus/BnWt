@@ -39,26 +39,15 @@ public class ForkLiftController : Interactable
         foreach (Collider hitCollider in hitColliders)
         {
             if (hitCollider.gameObject == this) continue;
-            SimpleCrate crate = hitCollider.GetComponent<SimpleCrate>();
-            if (crate)
+
+            var interact = hitCollider.GetComponent(typeof(Interactable)) as Interactable;
+            if (interact)
             {
-                // if crate is in front 
-                Vector3 directionToTarget = crate.transform.position - transform.position;
+                Vector3 directionToTarget = interact.transform.position - transform.position;
                 float ang = Vector3.Angle(transform.right, directionToTarget);
                 if (ang < pickup_angle)
                 {
-                    objects_in_range.Add(crate);
-                }
-            }
-            Trolly trolly = hitCollider.GetComponent<Trolly>();
-            if (trolly)
-            {
-                // if crate is in front 
-                Vector3 directionToTarget = trolly.transform.position - transform.position;
-                float ang = Vector3.Angle(transform.right, directionToTarget);
-                if (ang < pickup_angle)
-                {
-                    objects_in_range.Add(trolly);
+                    objects_in_range.Add(interact);
                 }
             }
         }
