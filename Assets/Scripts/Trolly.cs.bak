@@ -31,9 +31,12 @@ public class Trolly : Interactable
         Debug.Log("interact with " + other.name);
     }
 
+<<<<<<< HEAD
+=======
     private FMOD.Studio.EventInstance TrolleyLoop;
 
 
+>>>>>>> 644ca58f12a32a06a0c3801a0e03576a8313a84e
     public void OnCollisionEnter(Collision collision)
     {
         ForkLiftController forkLift = collision.collider.GetComponent<ForkLiftController>();
@@ -185,10 +188,14 @@ public class Trolly : Interactable
     {
 
         // notify score script 
+<<<<<<< HEAD
+        GameManager.Instance.OnCartDeraild();
+=======
 
         TrolleyLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         TrolleyLoop.release();
 
+>>>>>>> 644ca58f12a32a06a0c3801a0e03576a8313a84e
         Debug.Log("cart derailed");
     }
 
