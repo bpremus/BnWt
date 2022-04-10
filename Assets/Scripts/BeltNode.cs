@@ -16,6 +16,8 @@ public class BeltNode : MonoBehaviour
     [SerializeField]
     public NodeType node_type;
 
+    public bool show_goods_bubble = false;
+
     public void AddNode(BeltNode node)
     {
         _nextNode = node;

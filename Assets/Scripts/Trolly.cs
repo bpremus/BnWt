@@ -17,6 +17,14 @@ public class Trolly : Interactable
     [SerializeField]
     protected BeltNode.NodeType _currentNodeType;
 
+    [SerializeField]
+    protected BilboardBubble bilboard;
+
+    private bool show_goods_bubble = false;
+
+    [SerializeField]
+    public int requered_family = 0;
+
     // override 
     public override void Interact(Interactable other)
     {
@@ -65,9 +73,8 @@ public class Trolly : Interactable
         }
 
         Vector3 postion;
-        Vector3 direction;
-        
-        _mainPath.GetNodeAtDistance(distance, out postion, out direction, out _currentNodeType);
+        Vector3 direction;        
+        _mainPath.GetNodeAtDistance(distance, out postion, out direction, out _currentNodeType, out show_goods_bubble);
         transform.position = postion;
     }
 
@@ -75,8 +82,20 @@ public class Trolly : Interactable
     {
         SetOnPath();
         move_mehanics();
+        ShowGoods();
     }
 
+    public void ShowGoods()
+    {
+        if (show_goods_bubble)
+        {
+            bilboard.gameObject.SetActive(true);
+        }
+        else 
+        {
+            bilboard.gameObject.SetActive(false);
+        }
+    }
 
     public void move_mehanics()
     {

@@ -35,11 +35,12 @@ public class ConveyerBeltPath : MonoBehaviour
         BuildPath();
     }
 
-    public void GetNodeAtDistance(float distance, out Vector3 nodePt, out Vector3 direction, out BeltNode.NodeType type)
+    public void GetNodeAtDistance(float distance, out Vector3 nodePt, out Vector3 direction, out BeltNode.NodeType type, out bool show_goods)
     {
         nodePt = Vector3.zero;
         direction = Vector3.forward;
         type = BeltNode.NodeType.normal;
+        show_goods = false;
 
         float total_distance = 0;
         for (int i = 0; i < _nodes.Count; i++)
@@ -52,6 +53,7 @@ public class ConveyerBeltPath : MonoBehaviour
                 float curret_dist = (total_distance - next_distance) - distance;
                 nodePt = _nodes[i].GetNodeAtDistance(curret_dist);
                 type = _nodes[i].node_type;
+                show_goods = _nodes[i].show_goods_bubble;
                 return;
             }
         }

@@ -10,19 +10,32 @@ public class BeltFeeder : MonoBehaviour
 
     public float trolly_spawn_timer = 2f;
     public int max_spawn = 3;
+    public bool is_active = false;
 
+    ConveyerBeltPath path;
+    public void Awake()
+    {
+        path = GetComponent<ConveyerBeltPath>();
+    }
 
     public void Update()
     {
+        if (is_active == true)
         SpawnTrolly();
     }
 
-    float _timer = 0;
+
+    public void SetSpeed(float power)
+    {
+        path.power = power;
+    }
+
+    float _timer = 100;
     int _spawn = 0;
     public void SpawnTrolly()
     {
 
-        if (_spawn >= max_spawn) return;
+        if (max_spawn != 0 &&_spawn >= max_spawn) return;
 
         _timer += Time.deltaTime;
         if (_timer > trolly_spawn_timer)
@@ -34,13 +47,14 @@ public class BeltFeeder : MonoBehaviour
             return;
         }
 
-        ConveyerBeltPath path = GetComponent<ConveyerBeltPath>();
+        
         if (path)
         {
             Vector3 start_position;
             Vector3 start_rotation;
             BeltNode.NodeType node_type;
-            path.GetNodeAtDistance(0, out start_position, out start_rotation, out node_type);
+            bool show_goods = false; // not used now
+            path.GetNodeAtDistance(0, out start_position, out start_rotation, out node_type, out show_goods);
             Trolly t = Instantiate(rail_trolly_prefab, start_position, rail_trolly_prefab.transform.rotation);
             t.SetPath(path);
             OnTrollySpawn(t);

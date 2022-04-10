@@ -22,6 +22,7 @@ public class UILayer : MonoBehaviour
 
     public void SetBottomText(string str)
     {
+        if (_bottom_text)
         _bottom_text.text = str;
     }
 
