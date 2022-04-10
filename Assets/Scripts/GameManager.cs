@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
     {
         // start main game
         SceneManager.LoadScene(1);
+
+        MusicPlayer.instance.PlayMainMusic();
     }
 
     [SerializeField]
