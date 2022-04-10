@@ -38,7 +38,13 @@ public class Trolly : Interactable
         if (forkLift)
         {
             if (forkLift.localForwardVelocity > 5)
+            {
+                if (derailed == false)
+                {
+                    OnDereailed();
+                }
                 derailed = true;
+            }           
         }
     }
 
@@ -74,8 +80,13 @@ public class Trolly : Interactable
 
         Vector3 postion;
         Vector3 direction;        
-        _mainPath.GetNodeAtDistance(distance, out postion, out direction, out _currentNodeType, out show_goods_bubble);
+        int on_path = _mainPath.GetNodeAtDistance(distance, out postion, out direction, out _currentNodeType, out show_goods_bubble);
         transform.position = postion;
+
+        if (on_path == -1)
+        {
+            OnDestinationReach();
+        }
     }
 
     public void Update()
@@ -120,7 +131,20 @@ public class Trolly : Interactable
 
     public void OnDestinationReach()
     {
-       
+        Debug.Log("cart reached destination");
+
+        // notify score script 
+
+        // destroy cart 
+        Destroy(this.gameObject);
+    }
+
+    public void OnDereailed()
+    {
+
+        // notify score script 
+
+        Debug.Log("cart derailed");
     }
 
 }
