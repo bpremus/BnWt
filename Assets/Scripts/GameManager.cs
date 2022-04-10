@@ -35,6 +35,49 @@ public class GameManager : MonoBehaviour
 
     // general buttons
 
+
+    // Singleton pattern
+    private static GameManager _instance;
+
+    public static GameManager Instance
+    {
+        get { return _instance; }
+    }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        _instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+    }
+
+
+    // Keeping scores 
+
+    public void OnCartReachDestionation(int cargo_valid)
+    {
+        if (cargo_valid > 0)
+        {
+            UILayer.Instance.SetBottomText("Good delivery");
+        }
+        else
+        {
+            UILayer.Instance.SetBottomText("Bad delivery");
+        }
+    }
+
+    public void OnCartDeraild()
+    {
+        UILayer.Instance.SetBottomText("Not cool");
+    }
+
+
     public void OnGameStart()
     {
         // start main game

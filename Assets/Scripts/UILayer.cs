@@ -7,19 +7,27 @@ public class UILayer : MonoBehaviour
 {
     private static UILayer _instance;
     public Text _bottom_text;
+    public Text _timer_text;
 
     public static UILayer Instance
     {
         get { return _instance; }
     }
 
+    // we need a queue and coroutine 
+
     float start_time = 1;
     public void Update()
     {
         start_time += Time.deltaTime;
-        SetBottomText(Mathf.Floor(start_time) + " sec");
+        SetTimerText(Mathf.Floor(start_time) + " sec");
     }
 
+    public void SetTimerText(string str)
+    {
+        if (_timer_text)
+            _timer_text.text = str;
+    }
     public void SetBottomText(string str)
     {
         if (_bottom_text)

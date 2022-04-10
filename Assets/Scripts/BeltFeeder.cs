@@ -12,6 +12,10 @@ public class BeltFeeder : MonoBehaviour
     public int max_spawn = 3;
     public bool is_active = false;
 
+    public int required_family = -1;
+    public int input_family = -1;
+    public int randomize_count = 3; // how many with wrong family
+
     ConveyerBeltPath path;
     public void Awake()
     {
@@ -24,6 +28,15 @@ public class BeltFeeder : MonoBehaviour
         SpawnTrolly();
     }
 
+    public void SetRequiredFamily(int family)
+    {
+        required_family = family;
+    }
+
+    public void SetInputFamily(int family)
+    {
+        input_family = family;
+    }
 
     public void SetSpeed(float power)
     {
@@ -59,10 +72,20 @@ public class BeltFeeder : MonoBehaviour
             t.SetPath(path);
             OnTrollySpawn(t);
 
+            t.requered_family = required_family;
+
             if (crate_prefabs.Length > 0)
-            { 
+            {
                 Interactable crate = Instantiate(crate_prefabs[0], t.transform.position, t.transform.rotation);
-                t.SetChild(crate);
+                SimpleCrate sc = crate.GetComponent<SimpleCrate>();
+                if (sc)
+                {
+                    // add count based on _spawn 
+                    // to randomize
+
+                    sc.family = input_family;
+                }
+                t.SetChild(crate);           
             }
             _spawn++;
         }

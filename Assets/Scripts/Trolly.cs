@@ -31,7 +31,6 @@ public class Trolly : Interactable
         Debug.Log("interact with " + other.name);
     }
 
-
     public void OnCollisionEnter(Collision collision)
     {
         ForkLiftController forkLift = collision.collider.GetComponent<ForkLiftController>();
@@ -101,6 +100,7 @@ public class Trolly : Interactable
         if (show_goods_bubble)
         {
             bilboard.gameObject.SetActive(true);
+            bilboard.SetFamily(requered_family);
         }
         else 
         {
@@ -134,7 +134,37 @@ public class Trolly : Interactable
         Debug.Log("cart reached destination");
 
         // notify score script 
+        if (requered_family > 0)
+        {
+            // required family for outgoing carts
 
+            int child_family = -1;
+            if (child_object == null)
+            {
+                // invalid delivery no child
+                GameManager.Instance.OnCartReachDestionation(-1);
+            }
+            else
+            { 
+                SimpleCrate sc = child_object.GetComponent<SimpleCrate>();
+                if (sc)
+                {
+                    child_family = sc.family;
+                }
+
+                if (requered_family == child_family)
+                {
+
+                    // valid cargo delivery
+                    GameManager.Instance.OnCartReachDestionation(1);
+                }
+                else
+                {
+                    // invalid delivery
+                    GameManager.Instance.OnCartReachDestionation(-1);
+                }
+            }
+        }
         // destroy cart 
         Destroy(this.gameObject);
     }
@@ -143,7 +173,7 @@ public class Trolly : Interactable
     {
 
         // notify score script 
-
+        GameManager.Instance.OnCartDeraild();
         Debug.Log("cart derailed");
     }
 
