@@ -38,7 +38,7 @@ public class ForkLiftController : Interactable
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject == this) continue;
+            if (hitCollider.gameObject == this.gameObject) continue;
 
             var interact = hitCollider.GetComponent(typeof(Interactable)) as Interactable;
             if (interact)

@@ -9184,7 +9184,7 @@ GameObject:
   - component: {fileID: 1522879277}
   - component: {fileID: 1522879280}
   m_Layer: 0
-  m_Name: fork_lift
+  m_Name: ForkLift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
