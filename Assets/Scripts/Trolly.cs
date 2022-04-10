@@ -185,6 +185,7 @@ public class Trolly : Interactable
     {
 
         // notify score script 
+        GameManager.Instance.OnCartDeraild();
 
         TrolleyLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         TrolleyLoop.release();
