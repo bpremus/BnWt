@@ -14,7 +14,7 @@ public class BilboardBubble : MonoBehaviour
 
         for (int i = 0; i < box_family_images.Length; i++)
         {
-            if (i == family)
+            if (i == family-1)
             {
                 box_family_images[i].gameObject.SetActive(true);
             }

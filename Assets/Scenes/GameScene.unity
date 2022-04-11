@@ -1403,6 +1403,7 @@ MonoBehaviour:
   output_belt: {fileID: 436027334}
   input_belt1: {fileID: 2126897210}
   input_belt2: {fileID: 1396727298}
+  truck_lane: {fileID: 822445573}
   level: 0
 --- !u!4 &268432589
 Transform:
@@ -3412,7 +3413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &614546540
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5007,7 +5008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &822445572
 Transform:
   m_ObjectHideFlags: 0
@@ -11649,7 +11650,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &1951511067
 CanvasRenderer:
   m_ObjectHideFlags: 0

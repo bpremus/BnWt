@@ -23,27 +23,30 @@ public class LevelManager : MonoBehaviour
        
     }
 
+    int total_cycels = 0;
     public IEnumerator SpawnControl()
     {
         while (true)
         {
-            int random  = Random.Range(1, 6);
-            int random2 = Random.Range(1, 6);
-            int random3 = Random.Range(1, 6);
-           // Debug.Log(random);
+            int random  = Random.Range(1, 7);
+            int random2 = Random.Range(1, 7);
+            int random3 = Random.Range(1, 7);
+            Debug.Log("family: " + random);
            // Debug.Log(random2);
            // Debug.Log(random3);
 
             output_belt.SetRequiredFamily(random);
             output_belt.SpawnTrolly();
 
-            truck_lane.SetRequiredFamily(random);
-            truck_lane.SpawnTrolly();
+            // every third loop add a truck
+            if (total_cycels % 3 == 0)
+            { 
+                truck_lane.SetRequiredFamily(random);
+                truck_lane.SpawnTrolly();
+            }
 
-
-            int random_belt = Random.Range(0, 2);
-
-            int order = Random.Range(1, 3);
+            int order = Random.Range(1, 4);
+            Debug.Log("order: " + order);
             if (order == 1)
             {
 
