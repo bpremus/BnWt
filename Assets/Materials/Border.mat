@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9126156599751308707
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 4
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -7,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Erase
+  m_Name: Border
   m_Shader: {fileID: -6465566751694194690, guid: 222eb874894596a41aec286da1ae7917, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +33,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_d26f7273fc3344a19d7c0a8a9ee9d7e4:
-        m_Texture: {fileID: 2800000, guid: 9004fafd9e687724d83ebf97e571113d, type: 3}
+        m_Texture: {fileID: 2800000, guid: f12ff9035ec0c194987fd389ab4eceb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -80,8 +93,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_08f7d50838fd475a93bddce2b97e0601: 23.57
-    - Vector1_fc4a4195548f418385d1a9ae4123f21b: -0.12
+    - Vector1_08f7d50838fd475a93bddce2b97e0601: 0
+    - Vector1_fc4a4195548f418385d1a9ae4123f21b: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -114,16 +127,3 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &3307014158474122578
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 4
