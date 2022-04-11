@@ -303,7 +303,7 @@ public class ForkLiftController : Interactable
         Sequence liftSequence = DOTween.Sequence();
         liftSequence.OnComplete(() => { canControl = true; });
         yield return liftSequence.
-            Append(child_object.transform.DOLocalJump(new Vector3(1.2f, 0, 1f), _i.bounceFactor, 1, _liftTime / 2).SetEase(Ease.InBounce)).
+            Append(child_object.transform.DOLocalJump(new Vector3(1.2f, 0, _liftMax), _i.bounceFactor, 1, _liftTime / 2).SetEase(Ease.InBounce)).
             Insert(0f, _lift.DOLocalMoveZ(_liftMax, _liftTime / 2)).WaitForCompletion();
     }
 }

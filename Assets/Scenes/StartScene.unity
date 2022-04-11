@@ -9883,7 +9883,7 @@ MonoBehaviour:
   rotation_speed: 45
   center_of_mass_offset: 0.1
   localForwardVelocity: 0
-  _lift: {fileID: 0}
+  _lift: {fileID: 1860822759}
   _liftTime: 0.5
   _liftMin: 0.8369455
   _liftMax: 2
