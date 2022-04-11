@@ -998,7 +998,7 @@ MonoBehaviour:
   _radius: 0.5
   _nextNode: {fileID: 1561245541}
   node_type: 0
-  show_goods_bubble: 0
+  show_goods_bubble: 1
 --- !u!1 &231945394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1405,12 @@ MonoBehaviour:
   input_belt2: {fileID: 1396727298}
   truck_lane: {fileID: 822445573}
   level: 0
+  time_between_carts: 3
+  time_between_new_batch: 5
+  cycles_beween_truck: 6
+  belt_power: 1
+  enable_belt_two_at: 5
+  enable_truck_at: 10
 --- !u!4 &268432589
 Transform:
   m_ObjectHideFlags: 0
@@ -7963,7 +7969,7 @@ MonoBehaviour:
   _radius: 0.5
   _nextNode: {fileID: 1662746856}
   node_type: 1
-  show_goods_bubble: 0
+  show_goods_bubble: 1
 --- !u!1 &1262934793
 GameObject:
   m_ObjectHideFlags: 0
@@ -8540,9 +8546,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rail_trolly_prefab: {fileID: 3352607107857330027, guid: cf30780b198d2ea45adbe02d5794d692, type: 3}
-  crate_prefabs: []
-  trolly_spawn_timer: 1.5
-  max_spawn: 3
+  crate_prefabs:
+  - {fileID: 1985859649189251970, guid: 012b599b23c9d8b48b1ad8c03e2e1551, type: 3}
+  - {fileID: 85492413087458102, guid: 4e59a1de3e9799149ae29ac203275ac2, type: 3}
+  - {fileID: 58735586147849857, guid: 87f3163f452fd0044bcc3984757ab086, type: 3}
+  - {fileID: 7268336881158868217, guid: 3c90d7471c3d04c48a8e2ca0331ddf10, type: 3}
+  - {fileID: 6854865008546705541, guid: 6c3d1237a0c55e84faf2739471eceb23, type: 3}
+  - {fileID: 281328094381046538, guid: e025f9da4b8675144b935d5f5beb59e7, type: 3}
+  trolly_spawn_timer: 3
+  max_spawn: 30
   is_active: 0
   required_family: -1
   input_family: -1
@@ -8886,7 +8898,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439746566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.29, y: -2.46, z: 11.98}
+  m_LocalPosition: {x: -14.29, y: -2.65, z: 11.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1396727300}
@@ -9450,7 +9462,7 @@ MonoBehaviour:
   _radius: 0.5
   _nextNode: {fileID: 1259867637}
   node_type: 2
-  show_goods_bubble: 0
+  show_goods_bubble: 1
 --- !u!1 &1577638672
 GameObject:
   m_ObjectHideFlags: 0
@@ -11058,7 +11070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910298126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.91, y: -2.37, z: 11.51}
+  m_LocalPosition: {x: -24.91, y: -2.56, z: 11.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1396727300}

@@ -23,6 +23,10 @@ public class LevelManager : MonoBehaviour
        
     }
 
+
+    public float time_between_carts = 1;
+    public float time_between_new_batch = 1;
+    public int cycles_beween_truck = 6;
     int total_cycels = 0;
     public IEnumerator SpawnControl()
     {
@@ -39,63 +43,71 @@ public class LevelManager : MonoBehaviour
             output_belt.SpawnTrolly();
 
             // every third loop add a truck
-            if (total_cycels % 3 == 0)
+            if (total_cycels % cycles_beween_truck == 0)
             { 
                 truck_lane.SetRequiredFamily(random);
                 truck_lane.SpawnTrolly();
             }
+
+            BeltFeeder current_belt = input_belt1;
+            if (total_cycels % 2 == 0)
+            {
+                current_belt = input_belt2;
+            }
+
+            total_cycels++;
 
             int order = Random.Range(1, 4);
             Debug.Log("order: " + order);
             if (order == 1)
             {
 
-                input_belt1.SetInputFamily(random);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random2);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random2);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random3);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random3);
+                current_belt.SpawnTrolly();
 
             }
             if (order == 2)
             {
-                input_belt1.SetInputFamily(random2);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random2);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random3);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random3);
+                current_belt.SpawnTrolly();
             }
             if (order == 3)
             {
-                input_belt1.SetInputFamily(random2);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random2);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random3);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random3);
+                current_belt.SpawnTrolly();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(time_between_carts);
 
-                input_belt1.SetInputFamily(random);
-                input_belt1.SpawnTrolly();
+                current_belt.SetInputFamily(random);
+                current_belt.SpawnTrolly();
             }
 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(time_between_new_batch);
 
 
 
@@ -112,22 +124,31 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    public float belt_power = 1;
+    public int enable_belt_two_at = 5;
+    public int enable_truck_at = 10;
+
     public void StartLevel()
     {
-        output_belt.trolly_spawn_timer = 10;
+      // output_belt.trolly_spawn_timer = 10;
         output_belt.is_active = true;
         output_belt.SetSpeed(2);
         // set required family 
      
-        input_belt1.trolly_spawn_timer = 5;
+      //  input_belt1.trolly_spawn_timer = 5;
         // add to spawn 3 at the same time with random
         input_belt1.is_active = true;
-        input_belt1.SetSpeed(3);
+        input_belt1.SetSpeed(belt_power);
+
+      //  input_belt2.trolly_spawn_timer = 5;
+        // add to spawn 3 at the same time with random
+        input_belt2.is_active = true;
+        input_belt2.SetSpeed(belt_power);
 
 
-        truck_lane.trolly_spawn_timer = 5;
+       // truck_lane.trolly_spawn_timer = 5;
         truck_lane.is_active = true;
-        truck_lane.SetSpeed(3);
+        truck_lane.SetSpeed(belt_power);
 
 
     }
