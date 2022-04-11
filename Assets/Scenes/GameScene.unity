@@ -2409,6 +2409,7 @@ MonoBehaviour:
   required_family: -1
   input_family: -1
   randomize_count: 3
+  autoplay_Demo: 0
 --- !u!114 &436027335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5054,6 +5055,7 @@ MonoBehaviour:
   required_family: 3
   input_family: -1
   randomize_count: 3
+  autoplay_Demo: 0
 --- !u!114 &822445574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7693,11 +7695,11 @@ RectTransform:
   m_Father: {fileID: 559128809}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 631.49, y: -419}
-  m_SizeDelta: {x: 599.0178, y: 102.5192}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -215}
+  m_SizeDelta: {x: 599.0178, y: 102.519196}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1231034382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8559,6 +8561,7 @@ MonoBehaviour:
   required_family: -1
   input_family: -1
   randomize_count: 3
+  autoplay_Demo: 0
 --- !u!114 &1396727299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10165,8 +10168,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 1
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 1
   m_Dithering: 0
@@ -13103,6 +13106,7 @@ MonoBehaviour:
   required_family: -1
   input_family: -1
   randomize_count: 3
+  autoplay_Demo: 0
 --- !u!1 &2130807244
 GameObject:
   m_ObjectHideFlags: 0
