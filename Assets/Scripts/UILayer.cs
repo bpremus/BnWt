@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UILayer : MonoBehaviour
 {
     private static UILayer _instance;
     public Text _bottom_text;
     public Text _timer_text;
+    public TMP_Text _countdown_text;
 
     public static UILayer Instance
     {
@@ -21,6 +24,12 @@ public class UILayer : MonoBehaviour
     {
         start_time += Time.deltaTime;
         SetTimerText(Mathf.Floor(start_time) + " sec");
+    }
+
+    public void SetCountdownText(float time)
+    {
+        TimeSpan interval = TimeSpan.FromSeconds(time);
+        _countdown_text.text = interval.ToString("mm\\:ss\\:ff");
     }
 
     public void SetTimerText(string str)

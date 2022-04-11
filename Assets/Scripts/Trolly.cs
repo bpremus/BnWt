@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Trolly : Interactable
 {
@@ -19,6 +20,7 @@ public class Trolly : Interactable
 
     [SerializeField]
     protected BilboardBubble bilboard;
+    private float bilboardScale;
 
     protected bool show_goods_bubble = false;
 
@@ -43,7 +45,7 @@ public class Trolly : Interactable
             {
                 if (derailed == false)
                 {
-                    OnDereailed();
+                    OnDerailed();
                 }
                 derailed = true;
             }           
@@ -63,6 +65,8 @@ public class Trolly : Interactable
     private void Awake()
     {
         col = GetComponent<BoxCollider>();
+        bilboardScale = bilboard.transform.localScale.x;
+        bilboard.transform.localScale = Vector3.zero;
         _currentNodeType = BeltNode.NodeType.wait;
 
         TrolleyLoop = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Ambient & Objects/Trolley_Movement");
@@ -110,6 +114,7 @@ public class Trolly : Interactable
         if (show_goods_bubble)
         {
             bilboard.gameObject.SetActive(true);
+            bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
             bilboard.SetFamily(requered_family);
         }
         else 
@@ -152,7 +157,7 @@ public class Trolly : Interactable
             if (child_object == null)
             {
                 // invalid delivery no child
-                GameManager.Instance.OnCartReachDestionation(-1);
+                GameManager.Instance.OnCartReachDestination(-1);
             }
             else
             { 
@@ -166,12 +171,12 @@ public class Trolly : Interactable
                 {
 
                     // valid cargo delivery
-                    GameManager.Instance.OnCartReachDestionation(1);
+                    GameManager.Instance.OnCartReachDestination(1);
                 }
                 else
                 {
                     // invalid delivery
-                    GameManager.Instance.OnCartReachDestionation(-1);
+                    GameManager.Instance.OnCartReachDestination(-1);
                 }
             }
         }
@@ -181,11 +186,11 @@ public class Trolly : Interactable
         Destroy(this.gameObject);
     }
 
-    public void OnDereailed()
+    public void OnDerailed()
     {
 
         // notify score script 
-        GameManager.Instance.OnCartDeraild();
+        GameManager.Instance.OnCartDerailed();
 
         TrolleyLoop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         TrolleyLoop.release();

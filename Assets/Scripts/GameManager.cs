@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     // Keeping scores 
 
-    public void OnCartReachDestionation(int cargo_valid)
+    public void OnCartReachDestination(int cargo_valid)
     {
         if (cargo_valid > 0)
         {
@@ -72,11 +72,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnCartDeraild()
+    public void OnCartDerailed()
     {
         UILayer.Instance.SetBottomText("Not cool");
     }
 
+    [SerializeField]
+    private float timerMinutes = 10.0f;
+    private bool timeRunning = false;
+    private float remainingTime, totalTime;
+
+    public void OnTimerStart()
+    {
+        timeRunning = true;
+        totalTime = timerMinutes * 60;
+        remainingTime = totalTime;
+    }
+
+    public void RunTimer()
+    {
+        if (timeRunning && remainingTime > 0)
+        {
+            remainingTime -= Time.deltaTime;
+        }
+        else
+        {
+            remainingTime = 0;
+            timeRunning = false;
+        }
+
+        UILayer.Instance.SetCountdownText(remainingTime);
+    }
+
+    public void OnTimerPause()
+    {
+        timeRunning = false;
+    }
 
     public void OnGameStart()
     {
@@ -84,17 +115,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
 
         MusicPlayer.instance.PlayMainMusic();
+
+        OnTimerStart();
     }
 
     [SerializeField]
     GameObject pause_menu;
     public void OnGamePause()
-    { 
-    
+    {
+        OnTimerPause();
     }
 
     public void Update()
     {
+        if (UILayer.Instance) { RunTimer(); }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pause_menu == null) return;

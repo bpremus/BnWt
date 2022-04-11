@@ -32,6 +32,13 @@ public class TruckTrolly : Trolly
         }
     }
 
+    public override void OnChildSpawn()
+    {
+        Vector3 child_snap_offset = transform.position;
+        child_object.transform.SetParent(this.transform);
+        child_object.transform.localPosition = new Vector3(0, 1.25f, 0);
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
       

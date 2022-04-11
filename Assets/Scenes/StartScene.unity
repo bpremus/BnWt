@@ -3586,6 +3586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   family: 0
 --- !u!23 &617911353
 MeshRenderer:
@@ -3823,6 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   family: 0
 --- !u!23 &650516331
 MeshRenderer:
@@ -7029,6 +7031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   family: 0
 --- !u!23 &1022734479
 MeshRenderer:
@@ -9789,7 +9792,7 @@ GameObject:
   - component: {fileID: 1522879277}
   - component: {fileID: 1522879280}
   m_Layer: 0
-  m_Name: fork_lift
+  m_Name: ForkLift
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9872,10 +9875,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   move_speed: 50
   rotation_speed: 45
   center_of_mass_offset: 0.1
   localForwardVelocity: 0
+  _lift: {fileID: 0}
+  _liftTime: 0.5
+  _liftMin: 0.8369455
+  _liftMax: 2
   pickup_distance: 3
 --- !u!54 &1522879278
 Rigidbody:
@@ -13775,7 +13783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb90b6cc3dff1b743a108b476a4596cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause_menu: {fileID: 0}
+  timerMinutes: 10
+  pause_menu: {fileID: 200465450721488086, guid: a700b135e06868c41b31f7741afdedb8, type: 3}
 --- !u!4 &2145966821
 Transform:
   m_ObjectHideFlags: 0
@@ -14962,6 +14971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   family: 0
 --- !u!1 &5834677992078242279
 GameObject:
@@ -15258,6 +15268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   family: 0
 --- !u!33 &7361079537906060713
 MeshFilter:

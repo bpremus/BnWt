@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child_object: {fileID: 0}
+  bounceFactor: 0
   _mainPath: {fileID: 0}
   distance: 0
   move_timer: 2

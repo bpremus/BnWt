@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class ForkLiftController : Interactable
 {
@@ -13,6 +14,11 @@ public class ForkLiftController : Interactable
     private FMOD.Studio.EventInstance ForkliftEngineFwd;
     private FMOD.Studio.EventInstance ForkliftEngineBck;
     private FMOD.Studio.EventInstance ForkliftBeep;
+
+    [SerializeField] private Transform _lift;
+    [SerializeField] private float _liftTime = 0.5f;
+    [SerializeField] private float _liftMin = 0.8369455f, _liftMax = 2f;
+    private bool canControl = true;
 
     public void Awake()
     {
@@ -88,6 +94,7 @@ public class ForkLiftController : Interactable
                     {
                         // pickup crate 
                         SetChild(sc);
+                        canControl = false;
                         _timer = 0;
 
                         OnPickupCrate();
@@ -105,6 +112,7 @@ public class ForkLiftController : Interactable
                         {
                             // pickup crate 
                             SetChild(sc);
+                            canControl = false;
                             _timer = 0;
                             // notify troll that we picked it up
                             // to do
@@ -166,18 +174,18 @@ public class ForkLiftController : Interactable
         OnChildSpawn();
     }
 
-
-    override protected void OnChildSpawn()
+    override public void OnChildSpawn()
     {
         Vector3 child_snap_offset = transform.position;
         child_object.transform.SetParent(this.transform);
-        child_object.transform.localPosition = new Vector3(1.2f,0,1f);
+        //child_object.transform.localPosition = new Vector3(1.2f,0,1f);
         child_object.transform.localRotation = Quaternion.identity;
     }
 
     public void FixedUpdate()
     {
-        Move();
+        if (canControl)
+        { Move(); }
         InteractControl();
         ForkliftEngineFwd.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
         ForkliftBeep.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
@@ -281,10 +289,22 @@ public class ForkLiftController : Interactable
 
     public void OnPickupCrate()
     {
-
+        StartCoroutine(AnimatePickUp(child_object));
     }
     public void OnDropCrate()
     {
+        _lift.transform.DOLocalMoveZ(_liftMin, 0.5f);
+    }
 
+    // Animation and Tweening
+    private IEnumerator AnimatePickUp(Interactable _i)
+    {
+        Debug.Log("Lifting...");
+        Sequence liftSequence = DOTween.Sequence();
+        liftSequence.OnComplete(() => { canControl = true; });
+        yield return liftSequence.
+            Append(child_object.transform.DOLocalJump(new Vector3(1.2f, 0, 1f), _i.bounceFactor, 1, _liftTime / 2).SetEase(Ease.InBounce)).
+            Append(child_object.transform.DORotate(new Vector3(-2.0f, 0, 0), _liftTime / 3).SetLoops(1, LoopType.Yoyo)).
+            Insert(0f, _lift.DOLocalMoveZ(_liftMax, _liftTime)).WaitForCompletion();
     }
 }

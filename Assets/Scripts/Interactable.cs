@@ -9,6 +9,8 @@ public class Interactable : MonoBehaviour
     [SerializeField]
     protected Interactable child_object;
 
+    public float bounceFactor;
+
     virtual public void Interact(Interactable other)
     { 
     
@@ -36,7 +38,7 @@ public class Interactable : MonoBehaviour
         return i;
     }
 
-    virtual protected void OnChildSpawn()
+    virtual public void OnChildSpawn()
     {
         Vector3 child_snap_offset = transform.position;
         child_object.transform.SetParent(this.transform);
