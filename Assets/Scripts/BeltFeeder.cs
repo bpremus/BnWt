@@ -24,8 +24,8 @@ public class BeltFeeder : MonoBehaviour
 
     public void Update()
     {
-        if (is_active == true)
-        SpawnTrolly();
+        //if (is_active == true)
+        //SpawnTrolly();
     }
 
     public void SetRequiredFamily(int family)
@@ -47,20 +47,18 @@ public class BeltFeeder : MonoBehaviour
     int _spawn = 0;
     public void SpawnTrolly()
     {
-
-        if (max_spawn != 0 &&_spawn >= max_spawn) return;
-
-        _timer += Time.deltaTime;
-        if (_timer > trolly_spawn_timer)
-        {
-            _timer = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        
+     //   if (max_spawn != 0 &&_spawn >= max_spawn) return;
+     //
+     // _timer += Time.deltaTime;
+     // if (_timer > trolly_spawn_timer)
+     // {
+     //     _timer = 0;
+     // }
+     // else
+     // {
+     //     return;
+     // }
+  
         if (path)
         {
             Vector3 start_position;
@@ -76,7 +74,8 @@ public class BeltFeeder : MonoBehaviour
 
             if (crate_prefabs.Length > 0)
             {
-                Interactable crate = Instantiate(crate_prefabs[0], t.transform.position, t.transform.rotation);
+                int crate_index = input_family - 1;
+                Interactable crate = Instantiate(crate_prefabs[crate_index], t.transform.position, t.transform.rotation);
                 SimpleCrate sc = crate.GetComponent<SimpleCrate>();
                 if (sc)
                 {

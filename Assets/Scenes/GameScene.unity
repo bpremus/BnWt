@@ -5007,7 +5007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &822445572
 Transform:
   m_ObjectHideFlags: 0
@@ -5157,7 +5157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847219615}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.03, y: -3.01, z: 9.6}
+  m_LocalPosition: {x: -9.03, y: -2.75, z: 9.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2126897209}
@@ -5438,7 +5438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877944854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.2, y: -3.01, z: 9.6}
+  m_LocalPosition: {x: -23.2, y: -2.75, z: 9.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2126897209}
@@ -12694,7 +12694,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rail_trolly_prefab: {fileID: 3352607107857330027, guid: cf30780b198d2ea45adbe02d5794d692, type: 3}
   crate_prefabs:
-  - {fileID: 153531854543191148, guid: 3c1a01ff127487b49849dcbd422125f1, type: 3}
+  - {fileID: 1985859649189251970, guid: 012b599b23c9d8b48b1ad8c03e2e1551, type: 3}
+  - {fileID: 85492413087458102, guid: 4e59a1de3e9799149ae29ac203275ac2, type: 3}
+  - {fileID: 58735586147849857, guid: 87f3163f452fd0044bcc3984757ab086, type: 3}
+  - {fileID: 7268336881158868217, guid: 3c90d7471c3d04c48a8e2ca0331ddf10, type: 3}
+  - {fileID: 6854865008546705541, guid: 6c3d1237a0c55e84faf2739471eceb23, type: 3}
+  - {fileID: 281328094381046538, guid: e025f9da4b8675144b935d5f5beb59e7, type: 3}
   trolly_spawn_timer: 3
   max_spawn: 30
   is_active: 0
@@ -12856,7 +12861,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.1835e-41, y: 1.1681478e-37, z: 9.78048e-39, w: NaN}
+  m_BoundingSphereOverride: {x: 4.5905e-41, y: 0, z: 0, w: 4e-45}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
