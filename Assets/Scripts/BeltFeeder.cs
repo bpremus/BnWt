@@ -22,10 +22,29 @@ public class BeltFeeder : MonoBehaviour
         path = GetComponent<ConveyerBeltPath>();
     }
 
+    public bool autoplay_Demo = false;
+
     public void Update()
     {
         //if (is_active == true)
-        //SpawnTrolly();
+        if (autoplay_Demo)
+        {
+               if (max_spawn != 0 &&_spawn >= max_spawn) return;
+            
+             _timer += Time.deltaTime;
+             if (_timer > trolly_spawn_timer)
+             {
+                 _timer = 0;
+             }
+             else
+             {
+                 return;
+             }
+            required_family++;
+            if (required_family > 6)
+                required_family = 1;
+            SpawnTrolly();
+        }     
     }
 
     public void SetRequiredFamily(int family)
@@ -47,17 +66,7 @@ public class BeltFeeder : MonoBehaviour
     int _spawn = 0;
     public void SpawnTrolly()
     {
-     //   if (max_spawn != 0 &&_spawn >= max_spawn) return;
-     //
-     // _timer += Time.deltaTime;
-     // if (_timer > trolly_spawn_timer)
-     // {
-     //     _timer = 0;
-     // }
-     // else
-     // {
-     //     return;
-     // }
+
   
         if (path)
         {
