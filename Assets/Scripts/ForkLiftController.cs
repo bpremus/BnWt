@@ -304,7 +304,6 @@ public class ForkLiftController : Interactable
         liftSequence.OnComplete(() => { canControl = true; });
         yield return liftSequence.
             Append(child_object.transform.DOLocalJump(new Vector3(1.2f, 0, 1f), _i.bounceFactor, 1, _liftTime / 2).SetEase(Ease.InBounce)).
-            Append(child_object.transform.DORotate(new Vector3(-2.0f, 0, 0), _liftTime / 3).SetLoops(1, LoopType.Yoyo)).
-            Insert(0f, _lift.DOLocalMoveZ(_liftMax, _liftTime)).WaitForCompletion();
+            Insert(0f, _lift.DOLocalMoveZ(_liftMax, _liftTime / 2)).WaitForCompletion();
     }
 }
