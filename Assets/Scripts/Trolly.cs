@@ -124,7 +124,7 @@ public class Trolly : Interactable
             if (show_goods_bubble)
             {
                 bilboard.gameObject.SetActive(true);
-                bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
+                //bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
                 bilboard.SetFamily(requered_family);
             }
             else
