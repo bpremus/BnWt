@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     public BeltFeeder output_belt;
     public BeltFeeder input_belt1;
     public BeltFeeder input_belt2;
+    public BeltFeeder truck_lane;
 
     public int level = 0;
 
@@ -26,12 +27,18 @@ public class LevelManager : MonoBehaviour
     {
         while (true)
         {
-            int random = Random.Range(1, 6);
+            int random  = Random.Range(1, 6);
             int random2 = Random.Range(1, 6);
             int random3 = Random.Range(1, 6);
+           // Debug.Log(random);
+           // Debug.Log(random2);
+           // Debug.Log(random3);
 
             output_belt.SetRequiredFamily(random);
             output_belt.SpawnTrolly();
+
+            truck_lane.SetRequiredFamily(random);
+            truck_lane.SpawnTrolly();
 
 
             int random_belt = Random.Range(0, 2);
@@ -54,7 +61,7 @@ public class LevelManager : MonoBehaviour
                 input_belt1.SpawnTrolly();
 
             }
-            if (order == 1)
+            if (order == 2)
             {
                 input_belt1.SetInputFamily(random2);
                 input_belt1.SpawnTrolly();
@@ -69,7 +76,7 @@ public class LevelManager : MonoBehaviour
                 input_belt1.SetInputFamily(random3);
                 input_belt1.SpawnTrolly();
             }
-            if (order == 1)
+            if (order == 3)
             {
                 input_belt1.SetInputFamily(random2);
                 input_belt1.SpawnTrolly();
@@ -85,7 +92,7 @@ public class LevelManager : MonoBehaviour
                 input_belt1.SpawnTrolly();
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(10);
 
 
 
@@ -113,7 +120,13 @@ public class LevelManager : MonoBehaviour
         // add to spawn 3 at the same time with random
         input_belt1.is_active = true;
         input_belt1.SetSpeed(3);
-       
+
+
+        truck_lane.trolly_spawn_timer = 5;
+        truck_lane.is_active = true;
+        truck_lane.SetSpeed(3);
+
+
     }
 
 }

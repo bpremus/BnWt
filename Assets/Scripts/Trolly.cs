@@ -33,7 +33,7 @@ public class Trolly : Interactable
         Debug.Log("interact with " + other.name);
     }
 
-    private FMOD.Studio.EventInstance TrolleyLoop;
+    protected FMOD.Studio.EventInstance TrolleyLoop;
 
 
     public virtual void OnCollisionEnter(Collision collision)
@@ -79,6 +79,7 @@ public class Trolly : Interactable
         _mainPath = path;
     }
 
+    protected int _lastNode = 0;
     public virtual void SetOnPath()
     {
         if (derailed)
@@ -92,6 +93,12 @@ public class Trolly : Interactable
         Vector3 direction;        
         int on_path = _mainPath.GetNodeAtDistance(distance, out postion, out direction, out _currentNodeType, out show_goods_bubble);
         transform.position = postion;
+
+        if (_lastNode != on_path)
+        {
+            OnNodeReach(on_path);
+            _lastNode = on_path;
+        }
 
         if (on_path == -1)
         {
@@ -123,7 +130,7 @@ public class Trolly : Interactable
         }
     }
 
-    public void move_mehanics()
+    public virtual void move_mehanics()
     {
         if (_mainPath.power > 0)
         {
@@ -144,7 +151,21 @@ public class Trolly : Interactable
         }
     }
 
-    public void OnDestinationReach()
+    public virtual void OnNodeReach(int index)
+    {
+        // last node 
+        if (index == -1)
+        {
+
+        }
+        else
+        { 
+            
+        }
+    }
+
+
+    public virtual void OnDestinationReach()
     {
         Debug.Log("cart reached destination");
 
@@ -180,6 +201,7 @@ public class Trolly : Interactable
                 }
             }
         }
+
         // destroy cart 
         TrolleyLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         TrolleyLoop.release();

@@ -26,6 +26,12 @@ public class TruckTrolly : Trolly
         transform.position = postion;
         last_pos = postion;
 
+        if (_lastNode != on_path)
+        {
+            OnNodeReach(on_path);
+            _lastNode = on_path;
+        }
+
         if (on_path == -1)
         {
             OnDestinationReach();
@@ -42,6 +48,65 @@ public class TruckTrolly : Trolly
     public override void OnCollisionEnter(Collision collision)
     {
       
+    }
+
+    public override void OnNodeReach(int index)
+    {
+        // last node 
+        if (index == -1)
+        {
+
+        }
+        else
+        {
+
+                Debug.Log("truck on node:" + index);
+            
+        }
+    }
+
+
+    public override void OnDestinationReach()
+    {
+        Debug.Log("truck reached destination");
+
+        // notify score script 
+        if (requered_family > 0)
+        {
+            // required family for outgoing carts
+
+            int child_family = -1;
+            if (child_object == null)
+            {
+                // invalid delivery no child
+                GameManager.Instance.OnCartReachDestination(-1);
+            }
+            else
+            {
+                SimpleCrate sc = child_object.GetComponent<SimpleCrate>();
+                if (sc)
+                {
+                    child_family = sc.family;
+                }
+
+                if (requered_family == child_family)
+                {
+
+                    // valid cargo delivery
+                    GameManager.Instance.OnCartReachDestination(1);
+                }
+                else
+                {
+                    // invalid delivery
+                    GameManager.Instance.OnCartReachDestination(-1);
+                }
+            }
+        }
+
+        // destroy cart 
+        TrolleyLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        TrolleyLoop.release();
+        Destroy(this.gameObject);
     }
 
 }
