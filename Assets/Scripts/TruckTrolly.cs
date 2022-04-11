@@ -55,14 +55,23 @@ public class TruckTrolly : Trolly
         // last node 
         if (index == -1)
         {
-
+            
         }
         else
         {
 
                 Debug.Log("truck on node:" + index);
-            
+
+            if (index == 1)
+            {
+                // first node 
+
+                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Ambient & Objects/Truck_Horn", gameObject);
+            }
+
         }
+
+
     }
 
 
