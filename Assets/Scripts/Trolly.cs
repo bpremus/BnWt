@@ -115,18 +115,35 @@ public class Trolly : Interactable
         TrolleyLoop.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform, GetComponent<Rigidbody2D>()));
 
     }
-
+    public bool hardcore = false;
     public void ShowGoods()
     {
-        if (show_goods_bubble)
+        if (bilboard == null) return;
+        if (hardcore)
         {
-            bilboard.gameObject.SetActive(true);
-            bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
-            bilboard.SetFamily(requered_family);
+            if (show_goods_bubble)
+            {
+                bilboard.gameObject.SetActive(true);
+                bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
+                bilboard.SetFamily(requered_family);
+            }
+            else
+            {
+                bilboard.gameObject.SetActive(false);
+            }
         }
-        else 
+        else
         {
-            bilboard.gameObject.SetActive(false);
+            if (child_object == null)
+            {
+                bilboard.gameObject.SetActive(true);
+                bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
+                bilboard.SetFamily(requered_family);
+            }
+            else
+            {
+                bilboard.gameObject.SetActive(false);
+            }
         }
     }
 
