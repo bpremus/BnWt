@@ -72,8 +72,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float timerMinutes = 10.0f;
+
     private bool  timeRunning = false;
-    private float remainingTime, totalTime;
+
+    [SerializeField]
+    private float remainingTime;
+    [SerializeField]
+    private float totalTime;
 
     public float good_time_add = 30;
     public float bad_time_add = -30;
@@ -205,12 +210,11 @@ public class GameManager : MonoBehaviour
 
     public void OnGameEnd(int grade)
     {
-        UILayer.Instance.ClearScreen();
-        // load the score screen
-        this.final_grade = grade;
-
-        _gameEnd = true;
-        
+            _gameEnd = true;
+            UILayer.Instance.ClearScreen();
+            // load the score screen
+            this.final_grade = grade;
+            SceneManager.LoadScene(2);                
     }
 
     public void RestartGame()
@@ -222,6 +226,7 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
         if (UILayer.Instance) { RunTimer(); }
+        CheckScore();
 
         if (Input.GetKeyDown(KeyCode.Escape) && UILayer.Instance)
         {
@@ -242,7 +247,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }
+        // if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }
     }
 
 }
