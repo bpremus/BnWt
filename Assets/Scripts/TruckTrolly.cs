@@ -113,8 +113,8 @@ public class TruckTrolly : Trolly
         }
 
         // destroy cart 
-        TrolleyLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        TrolleyLoop.release();
+       //TrolleyLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+       // TrolleyLoop.release();
         Destroy(this.gameObject);
     }
 

@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
         get { return _instance; }
     }
 
+    FMOD.Studio.Bus EndgameSfxStop;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(this.gameObject);
+
 
     }
 
@@ -93,6 +96,8 @@ public class GameManager : MonoBehaviour
 
             remainingTime += good_time_add;
             good_d++;
+
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/Correct", gameObject);
         }
         else
         {
@@ -101,6 +106,8 @@ public class GameManager : MonoBehaviour
 
             remainingTime += bad_time_add;
             bad_d++;
+
+            FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/Wrong", gameObject);
         }
     }
 
@@ -110,11 +117,15 @@ public class GameManager : MonoBehaviour
         total_score += bad_delivery;
         remainingTime += bad_time_add;
         derailed++;
+
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/NotCool", gameObject);
     }
 
     public void Start()
     {
         OnTimerStart();
+
+        EndgameSfxStop = FMODUnity.RuntimeManager.GetBus("bus:/SFX/Rest");
     }
 
     public void OnTimerStart()
@@ -215,7 +226,10 @@ public class GameManager : MonoBehaviour
             UILayer.Instance.ClearScreen();
             // load the score screen
             this.final_grade = grade;
-            SceneManager.LoadScene(2);                
+            SceneManager.LoadScene(2);
+
+        MusicPlayer.instance.StopMainMusic();
+        EndgameSfxStop.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void RestartGame()

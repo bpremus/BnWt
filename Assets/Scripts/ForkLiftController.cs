@@ -290,10 +290,15 @@ public class ForkLiftController : Interactable
     public void OnPickupCrate()
     {
         StartCoroutine(AnimatePickUp(child_object));
+
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Forklift/Forklift_CraneUp", gameObject);
+
     }
     public void OnDropCrate()
     {
         _lift.transform.DOLocalMoveZ(_liftMin, 0.5f);
+
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Forklift/Forklift_CraneDown", gameObject);
     }
 
     // Animation and Tweening
