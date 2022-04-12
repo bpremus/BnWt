@@ -10,6 +10,7 @@ public class UILayer : MonoBehaviour
     private static UILayer _instance;
     public Text _bottom_text;
     public Text _timer_text;
+    public Text _gameScore;
     public TMP_Text _countdown_text;
 
     public static UILayer Instance
@@ -22,14 +23,28 @@ public class UILayer : MonoBehaviour
     float start_time = 1;
     public void Update()
     {
-        start_time += Time.deltaTime;
-        SetTimerText(Mathf.Floor(start_time) + " sec");
+        //start_time += Time.deltaTime;
+        //SetTimerText(Mathf.Floor(start_time) + " sec");
+    }
+
+    public void ClearScreen()
+    {
+        _bottom_text.text = "";
+        _timer_text.text = "";
+        _gameScore.text = "";
+    }
+
+    public void SetScore(int points)
+    {
+        _gameScore.text = points + "";
     }
 
     public void SetCountdownText(float time)
     {
         TimeSpan interval = TimeSpan.FromSeconds(time);
         _countdown_text.text = interval.ToString("mm\\:ss\\:ff");
+        string t = interval.ToString("mm\\:ss").ToString();
+        SetTimerText(t);
     }
 
     public void SetTimerText(string str)

@@ -43,10 +43,13 @@ public class LevelManager : MonoBehaviour
             output_belt.SpawnTrolly();
 
             // every third loop add a truck
-            if (total_cycels % cycles_beween_truck == 0)
-            { 
-                truck_lane.SetRequiredFamily(random);
-                truck_lane.SpawnTrolly();
+            if (total_cycels > cycles_beween_truck)
+            {
+                if (total_cycels % cycles_beween_truck == 0)
+                {
+                    truck_lane.SetRequiredFamily(random);
+                    truck_lane.SpawnTrolly();
+                }
             }
 
             BeltFeeder current_belt = input_belt1;

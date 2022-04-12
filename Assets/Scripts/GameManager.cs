@@ -59,28 +59,58 @@ public class GameManager : MonoBehaviour
 
 
     // Keeping scores 
+    [SerializeField]
+    public int total_score = 0;
+    public int good_d = 0;
+    public int bad_d = 0;
+    public int derailed = 0;
+    public string final_grade = "F";
+    public int good_delivery =  10;
+    public int bad_delivery  = -10;
+    public int derail_cart   = -20;
+
+
+    [SerializeField]
+    private float timerMinutes = 10.0f;
+    private bool  timeRunning = false;
+    private float remainingTime, totalTime;
+
+    public float good_time_add = 30;
+    public float bad_time_add = -30;
+
 
     public void OnCartReachDestination(int cargo_valid)
     {
         if (cargo_valid > 0)
         {
             UILayer.Instance.SetBottomText("Good delivery");
+            total_score += good_delivery;
+
+            remainingTime += good_time_add;
+            good_d++;
         }
         else
         {
             UILayer.Instance.SetBottomText("Bad delivery");
+            total_score += derail_cart;
+
+            remainingTime += bad_time_add;
+            bad_d++;
         }
     }
 
     public void OnCartDerailed()
     {
         UILayer.Instance.SetBottomText("Not cool");
+        total_score += bad_delivery;
+        remainingTime += bad_time_add;
+        derailed++;
     }
 
-    [SerializeField]
-    private float timerMinutes = 10.0f;
-    private bool timeRunning = false;
-    private float remainingTime, totalTime;
+    public void Start()
+    {
+        OnTimerStart();
+    }
 
     public void OnTimerStart()
     {
@@ -109,14 +139,19 @@ public class GameManager : MonoBehaviour
         timeRunning = false;
     }
 
+   
     public void OnGameStart()
     {
         // start main game
         SceneManager.LoadScene(1);
-
         MusicPlayer.instance.PlayMainMusic();
-
         OnTimerStart();
+    }
+
+    public void LoadScoreScreen()
+    {
+        remainingTime = 0;
+        SceneManager.LoadScene(2);
     }
 
     [SerializeField]
@@ -125,6 +160,74 @@ public class GameManager : MonoBehaviour
     {
         OnTimerPause();
     }
+
+    public void CheckScore()
+    {
+      
+       // total_score = 0;
+       // good_d = 0;
+       // bad_d = 0;
+       // derailed = 0;
+
+        if (remainingTime <= 0)
+        { 
+            // Game has ended
+
+            // lets count the score 
+            if (total_score < 100)
+            {
+                OnGameEnd(0);
+            }
+            if (total_score > 50)
+            {
+                OnGameEnd(1);
+            }
+            if (total_score > 150)
+            {
+                OnGameEnd(3);
+            }
+            if (total_score > 250)
+            {
+                OnGameEnd(5);
+            }
+            if (total_score > 350)
+            {
+                OnGameEnd(5);
+            }
+
+            return;
+        }
+
+        
+        // show positive score but keep the real one 
+        int positive_score = total_score;
+        if (positive_score < 0) positive_score = 0;
+        UILayer.Instance.SetScore(positive_score);
+    }
+
+
+    public void OnGameEnd(int grade)
+    {
+        UILayer.Instance.ClearScreen();
+        // load the score screen
+        if (grade == 0)
+            this.final_grade = "F";
+        if (grade == 1)
+            this.final_grade = "D";
+        if (grade == 3)
+            this.final_grade = "C";
+        if (grade == 4)
+            this.final_grade = "B";
+        if (grade == 5)
+            this.final_grade = "A";
+        
+    }
+
+    public void RestartGame()
+    { 
+    
+    }
+
 
     public void Update()
     {
@@ -143,9 +246,10 @@ public class GameManager : MonoBehaviour
             else
             {
                 pm.PauseGame();
-            }
-                
+            }           
         }
+
+        CheckScore();
     }
 
 }

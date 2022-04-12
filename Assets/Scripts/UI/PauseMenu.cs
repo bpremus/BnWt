@@ -17,7 +17,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
     public void RestartGame()
-    { 
-    
+    {
+        this.gameObject.SetActive(false);
+        GameManager.Instance.LoadScoreScreen();
     }
 }

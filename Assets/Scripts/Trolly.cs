@@ -134,7 +134,7 @@ public class Trolly : Interactable
         }
         else
         {
-            if (child_object == null)
+            if (child_object == null && requered_family != 0)
             {
                 bilboard.gameObject.SetActive(true);
                 bilboard.transform.DOScale(bilboardScale, 0.2f).SetEase(Ease.OutBounce);
