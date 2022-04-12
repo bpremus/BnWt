@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
             }           
         }
 
-        CheckScore();
+        if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }
     }
 
 }

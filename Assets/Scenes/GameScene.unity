@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502697, g: 0.37139347, b: 0.49601266, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11850,7 +11850,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 40
+    m_MaxSize: 92
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -13392,6 +13392,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   total_score: 0
+  good_d: 0
+  bad_d: 0
+  derailed: 0
+  final_grade: 0
   good_delivery: 10
   bad_delivery: -10
   derail_cart: -20

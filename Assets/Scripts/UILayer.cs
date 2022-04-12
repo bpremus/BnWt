@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UILayer : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UILayer : MonoBehaviour
     public Text _timer_text;
     public Text _gameScore;
     public TMP_Text _countdown_text;
+
+    //private Tween messageFade;
 
     public static UILayer Instance
     {
@@ -57,6 +60,16 @@ public class UILayer : MonoBehaviour
         if (_bottom_text)
         _bottom_text.text = str;
     }
+
+    // Past attempt to get a text fade method working with the masking shader. 
+    /*
+    public void FadeText(Text text, float endValue, float duration, TweenCallback action)
+    {
+        if (messageFade != null) { messageFade.Kill(false); }
+
+        text.material.SetFloat("_Masking", endValue);
+    }
+    */
 
     private void Awake()
     {
