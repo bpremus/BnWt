@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     public int good_d = 0;
     public int bad_d = 0;
     public int derailed = 0;
-    public string final_grade = "F";
+    public int final_grade = 0;
     public int good_delivery =  10;
     public int bad_delivery  = -10;
     public int derail_cart   = -20;
@@ -184,15 +184,11 @@ public class GameManager : MonoBehaviour
             }
             if (total_score > 150)
             {
+                OnGameEnd(2);
+            }
+            if (total_score > 200)
+            {
                 OnGameEnd(3);
-            }
-            if (total_score > 250)
-            {
-                OnGameEnd(5);
-            }
-            if (total_score > 350)
-            {
-                OnGameEnd(5);
             }
 
             return;
@@ -210,16 +206,7 @@ public class GameManager : MonoBehaviour
     {
         UILayer.Instance.ClearScreen();
         // load the score screen
-        if (grade == 0)
-            this.final_grade = "F";
-        if (grade == 1)
-            this.final_grade = "D";
-        if (grade == 3)
-            this.final_grade = "C";
-        if (grade == 4)
-            this.final_grade = "B";
-        if (grade == 5)
-            this.final_grade = "A";
+        this.final_grade = grade;
         
     }
 
