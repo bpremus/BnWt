@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
         MusicPlayer.instance.PlayMainMusic();
         OnTimerStart();
+        _gameEnd = false;
     }
 
     public void LoadScoreScreen()
@@ -158,6 +159,8 @@ public class GameManager : MonoBehaviour
     {
         OnTimerPause();
     }
+
+    bool _gameEnd = false;
 
     public void CheckScore()
     {
@@ -205,6 +208,8 @@ public class GameManager : MonoBehaviour
         UILayer.Instance.ClearScreen();
         // load the score screen
         this.final_grade = grade;
+
+        _gameEnd = true;
         
     }
 
@@ -224,13 +229,16 @@ public class GameManager : MonoBehaviour
             PauseMenu pm = UILayer.Instance.PauseMenu.GetComponent<PauseMenu>();
             if (pm == null) return;
 
-            if (UILayer.Instance.PauseMenu.gameObject.activeInHierarchy)
+            if (SceneManager.GetActiveScene().buildIndex == 1) // only on game scene
             {
-                pm.ResumeGame();
-            }
-            else
-            {
-                pm.PauseGame();
+                if (UILayer.Instance.PauseMenu.gameObject.activeInHierarchy)
+                {
+                    pm.ResumeGame();
+                }
+                else
+                {
+                    pm.PauseGame();
+                }
             }
         }
 
