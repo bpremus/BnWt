@@ -154,8 +154,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    [SerializeField]
-    GameObject pause_menu;
     public void OnGamePause()
     {
         OnTimerPause();
@@ -220,20 +218,20 @@ public class GameManager : MonoBehaviour
     {
         if (UILayer.Instance) { RunTimer(); }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && UILayer.Instance)
         {
-            if (pause_menu == null) return;
-            PauseMenu pm = pause_menu.GetComponent<PauseMenu>();
+            if (UILayer.Instance.PauseMenu == null) return;
+            PauseMenu pm = UILayer.Instance.PauseMenu.GetComponent<PauseMenu>();
             if (pm == null) return;
 
-            if (pause_menu.gameObject.activeInHierarchy)
+            if (UILayer.Instance.PauseMenu.gameObject.activeInHierarchy)
             {
                 pm.ResumeGame();
             }
             else
             {
                 pm.PauseGame();
-            }           
+            }
         }
 
         if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }

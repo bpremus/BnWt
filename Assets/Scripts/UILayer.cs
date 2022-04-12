@@ -14,6 +14,10 @@ public class UILayer : MonoBehaviour
     public Text _gameScore;
     public TMP_Text _countdown_text;
 
+    [SerializeField]
+    GameObject pause_menu;
+    public GameObject PauseMenu => pause_menu;
+
     //private Tween messageFade;
 
     public static UILayer Instance
