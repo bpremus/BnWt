@@ -210,6 +210,7 @@ public class GameManager : MonoBehaviour
 
     public void OnGameEnd(int grade)
     {
+             Debug.Log("Game End");
             _gameEnd = true;
             UILayer.Instance.ClearScreen();
             // load the score screen
@@ -226,14 +227,13 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
         if (UILayer.Instance) { RunTimer(); }
-        CheckScore();
-
+       // Debug.Log("scene is " + SceneManager.GetActiveScene().buildIndex);
         if (Input.GetKeyDown(KeyCode.Escape) && UILayer.Instance)
         {
             if (UILayer.Instance.PauseMenu == null) return;
             PauseMenu pm = UILayer.Instance.PauseMenu.GetComponent<PauseMenu>();
             if (pm == null) return;
-
+            
             if (SceneManager.GetActiveScene().buildIndex == 1) // only on game scene
             {
                 if (UILayer.Instance.PauseMenu.gameObject.activeInHierarchy)
@@ -244,10 +244,15 @@ public class GameManager : MonoBehaviour
                 {
                     pm.PauseGame();
                 }
+
+                
             }
         }
-
-        // if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            CheckScore();
+        }
+      //  if (SceneManager.GetActiveScene() != SceneManager.GetSceneAt(0)) { CheckScore(); }
     }
 
 }
