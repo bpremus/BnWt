@@ -38,6 +38,7 @@ public class ScoreScreen : MonoBehaviour
 
     public void RestartGame()
     {
+        Debug.Log("Restarting game");
         GameManager.Instance.RestartGame();
     }
 }

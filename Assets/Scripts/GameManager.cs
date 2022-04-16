@@ -245,8 +245,15 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame()
-    { 
-    
+    {
+        total_score = 0;
+        good_d = 0;
+        bad_d = 0;
+        derailed = 0;
+        final_grade = 0;
+        game_level = 0;
+        
+       SceneManager.LoadScene(0);
     }
 
 
