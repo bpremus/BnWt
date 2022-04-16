@@ -504,6 +504,11 @@ Transform:
   m_Father: {fileID: 1970828208}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &110241723 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 110241723, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+  m_PrefabInstance: {fileID: 5887374896518699739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &110384146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,11 +1411,12 @@ MonoBehaviour:
   truck_lane: {fileID: 822445573}
   level: 0
   time_between_carts: 3
-  time_between_new_batch: 5
+  time_between_new_batch: 8
   cycles_beween_truck: 6
   belt_power: 1
   enable_belt_two_at: 5
   enable_truck_at: 10
+  _power_multipl: 0.1
 --- !u!4 &268432589
 Transform:
   m_ObjectHideFlags: 0
@@ -2353,7 +2359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 0.5
   _nextNode: {fileID: 1112574706}
-  node_type: 0
+  node_type: 2
   show_goods_bubble: 0
 --- !u!4 &423547770
 Transform:
@@ -3452,6 +3458,11 @@ Transform:
   m_Father: {fileID: 1144778085}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!4 &602434095 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 602434095, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+  m_PrefabInstance: {fileID: 5887374896518699739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &614546538
 GameObject:
   m_ObjectHideFlags: 0
@@ -6923,7 +6934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 0.5
   _nextNode: {fileID: 1222141307}
-  node_type: 0
+  node_type: 2
   show_goods_bubble: 1
 --- !u!1 &1115726494
 GameObject:
@@ -7031,7 +7042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130235339}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.302, y: -2.534, z: -7.72}
+  m_LocalPosition: {x: -0.302, y: -2.534, z: -10.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2126897209}
@@ -9375,7 +9386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 0.5
   _nextNode: {fileID: 629160291}
-  node_type: 0
+  node_type: 2
   show_goods_bubble: 0
 --- !u!4 &1492440900
 Transform:
@@ -12172,7 +12183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 0.5
   _nextNode: {fileID: 1214588333}
-  node_type: 1
+  node_type: 3
   show_goods_bubble: 0
 --- !u!1 &1966649753
 GameObject:
@@ -13480,9 +13491,13 @@ MonoBehaviour:
   good_delivery: 10
   bad_delivery: -10
   derail_cart: -20
+  game_dificullty: 0
   timerMinutes: 10
+  remainingTime: 0
+  totalTime: 0
   good_time_add: 30
   bad_time_add: -30
+  game_level: 1
 --- !u!4 &2145966821
 Transform:
   m_ObjectHideFlags: 0
@@ -14927,9 +14942,53 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 412547890, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.126
+      objectReference: {fileID: 0}
+    - target: {fileID: 412547890, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 412547890, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.118
+      objectReference: {fileID: 0}
     - target: {fileID: 5887374897420292594, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
       propertyPath: m_Name
       value: ForkLift
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292597, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: move_speed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: rotation_speed
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: pickup_distance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: tires.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: tires.Array.data[0]
+      value: 
+      objectReference: {fileID: 110241723}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: tires.Array.data[1]
+      value: 
+      objectReference: {fileID: 602434095}
+    - target: {fileID: 5887374897420292598, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
+      propertyPath: center_of_mass_offset
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 5887374897420292599, guid: 70e47d36d53975348aac7d468fe1db9c, type: 3}
       propertyPath: m_RootOrder

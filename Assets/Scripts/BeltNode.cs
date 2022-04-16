@@ -49,6 +49,10 @@ public class BeltNode : MonoBehaviour
             {
                 Gizmos.color = Color.cyan;
             }
+            if (node_type == NodeType.wait)
+            {
+                Gizmos.color = Color.blue;
+            }
             Gizmos.DrawLine(transform.position, _nextNode.transform.position);
         }
         else 

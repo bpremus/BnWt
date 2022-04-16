@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     public int bad_delivery  = -10;
     public int derail_cart   = -20;
 
+    public int game_dificullty = 0;
 
     [SerializeField]
     private float timerMinutes = 10.0f;
@@ -86,6 +87,16 @@ public class GameManager : MonoBehaviour
     public float good_time_add = 30;
     public float bad_time_add = -30;
 
+    public int game_level = 1;
+
+    public void LevelUp()
+    {
+        if (good_d%3 == 0)
+        {
+            UILayer.Instance.SetBottomText("Level UP!");
+            game_level++;
+        }     
+    }
 
     public void OnCartReachDestination(int cargo_valid)
     {
@@ -97,12 +108,14 @@ public class GameManager : MonoBehaviour
             remainingTime += good_time_add;
             good_d++;
 
+            LevelUp();
+
             FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/Correct", gameObject);
         }
         else
         {
             UILayer.Instance.SetBottomText("Bad delivery");
-            total_score += derail_cart;
+            //total_score += bad_delivery;
 
             remainingTime += bad_time_add;
             bad_d++;
@@ -114,7 +127,7 @@ public class GameManager : MonoBehaviour
     public void OnCartDerailed()
     {
         UILayer.Instance.SetBottomText("Not cool");
-        total_score += bad_delivery;
+        // total_score += derail_cart;
         remainingTime += bad_time_add;
         derailed++;
 
@@ -191,7 +204,7 @@ public class GameManager : MonoBehaviour
             // Game has ended
 
             // lets count the score 
-            if (total_score < 100)
+            if (total_score <= 50)
             {
                 OnGameEnd(0);
             }
@@ -207,7 +220,6 @@ public class GameManager : MonoBehaviour
             {
                 OnGameEnd(3);
             }
-
             return;
         }
 

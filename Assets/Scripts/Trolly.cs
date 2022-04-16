@@ -121,6 +121,8 @@ public class Trolly : Interactable
         if (bilboard == null) return;
         if (hardcore)
         {
+            // hardcore game 
+
             if (show_goods_bubble)
             {
                 bilboard.gameObject.SetActive(true);
@@ -134,6 +136,7 @@ public class Trolly : Interactable
         }
         else
         {
+            // normal game 
             if (child_object == null && requered_family != 0)
             {
                 bilboard.gameObject.SetActive(true);
@@ -156,9 +159,13 @@ public class Trolly : Interactable
             {
                 cur_speed = _mainPath.slow_speed;
             }
-            else if (_currentNodeType == BeltNode.NodeType.slow)
+            else if (_currentNodeType == BeltNode.NodeType.fast)
             {
                 cur_speed = _mainPath.fast_speed;
+            }
+            else if (_currentNodeType == BeltNode.NodeType.wait)
+            {
+                cur_speed = _mainPath.slow_speed * 0.5f;
             }
             else
             {

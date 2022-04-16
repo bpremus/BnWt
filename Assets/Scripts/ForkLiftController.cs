@@ -14,10 +14,14 @@ public class ForkLiftController : Interactable
     private FMOD.Studio.EventInstance ForkliftEngineFwd;
     private FMOD.Studio.EventInstance ForkliftEngineBck;
     private FMOD.Studio.EventInstance ForkliftBeep;
+    public Transform[] tires;
 
     [SerializeField] private Transform _lift;
     [SerializeField] private float _liftTime = 0.5f;
     [SerializeField] private float _liftMin = 0.8369455f, _liftMax = 2f;
+
+    public bool simple_control = true;
+
     private bool canControl = true;
 
     public void Awake()
@@ -71,7 +75,7 @@ public class ForkLiftController : Interactable
     public void InteractControl()
     {
         //debug
-      //  _interactables = GetObjectsInRange(pickup_distance);
+        //  _interactables = GetObjectsInRange(pickup_distance);
 
         _timer += Time.deltaTime;
         if (_timer < 0.5)
@@ -89,6 +93,9 @@ public class ForkLiftController : Interactable
                 SimpleCrate sc = interactables[0].GetComponent<SimpleCrate>();
                 if (sc)
                 {
+                    float dist = Vector3.Distance(sc.transform.position, transform.position);
+                    if (dist >= pickup_distance - 1) return;
+
                     // pick it up if we dont have one
                     if (child_object == null)
                     {
@@ -107,6 +114,9 @@ public class ForkLiftController : Interactable
                     sc = interactables[1].GetComponent<SimpleCrate>();
                     if (sc)
                     {
+                        float dist = Vector3.Distance(sc.transform.position, transform.position);
+                        if (dist >= pickup_distance - 1) return;
+
                         // pick it up if we dont have one
                         if (child_object == null)
                         {
@@ -121,6 +131,7 @@ public class ForkLiftController : Interactable
                         }
                     }
                 }
+
                 Trolly tc = interactables[0].GetComponent<Trolly>();
                 if (tc)
                 {
@@ -239,18 +250,55 @@ public class ForkLiftController : Interactable
             }
         }
 
-        if (localForwardVelocity != 0)
-        {     
+        // tire animation
+        if (tires.Count() == 2)
+        {
+
+            Vector3 left = tires[0].localEulerAngles;
+            left.z = direction.z * (-30);
+
+            Vector3 right = tires[1].localEulerAngles;
+            right.z = direction.z * (30);
+            right.z += 180;
+
+            tires[0].localEulerAngles = left;
+            tires[1].localEulerAngles = right;
+        }
+
+
+        if (simple_control)
+        {
+            float boost_turn_back = 1;
             if (direction.x < 0)
             {
                 direction = -direction;
+                boost_turn_back = 1.4f;
             }
-            rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+
+            if (direction.x == 0)
+            {
+                rb.AddForce(fwd * 0.05f * move_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+            }
+
+            rb.AddTorque(transform.forward * direction.z * boost_turn_back * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
         }
+        else
+        {
+            if (localForwardVelocity != 0)
+            {
+                if (direction.x < 0)
+                {
+                    direction = -direction;
+                }
+                rb.AddTorque(transform.forward * direction.z * rotation_speed * Time.fixedDeltaTime, ForceMode.Impulse);
+            }
+        }
+
+
 
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
         var rot = Quaternion.FromToRotation(transform.forward, Vector3.up);
-        rb.AddTorque(new Vector3(rot.x, rot.y, rot.z) * 10f, ForceMode.Impulse);
+        rb.AddTorque(new Vector3(rot.x, rot.y, rot.z) * rotation_speed/2, ForceMode.Impulse);
     }
 
     public enum ForkliftState { idle, fwd, back };

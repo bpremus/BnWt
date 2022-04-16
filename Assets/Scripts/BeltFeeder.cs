@@ -50,11 +50,13 @@ public class BeltFeeder : MonoBehaviour
     public void SetRequiredFamily(int family)
     {
         required_family = family;
+        input_family = 0;
     }
 
     public void SetInputFamily(int family)
     {
         input_family = family;
+        required_family = 0;
     }
 
     public void SetSpeed(float power)
